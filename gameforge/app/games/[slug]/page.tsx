@@ -2,14 +2,22 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Target, Lightbulb, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
 
-const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[] }> = {
+const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[] }> = {
   "mobile-legends": {
     name: "Mobile Legends: Bang Bang", genre: "MOBA",
-    intro: "A practical framework for making better decisions before, during and after every match.",
-    objective: "Turn lane pressure into map control. Win your lane when possible, but prioritize objectives, safe rotations and team fights that have a clear advantage.",
-    plan: ["Before the match, check enemy crowd control, damage types and engage range. Adjust your role and build to the actual draft.", "In lane, protect your health and experience. Trade when your key skill is available, and avoid fighting inside a large enemy minion wave.", "After clearing a wave, look for a useful rotation: help secure an objective, protect your jungler or pressure another lane.", "Before contesting Turtle or Lord, push nearby lanes and check enemy positions. Do not start an objective blindly."],
-    tips: ["Track enemy ultimates and battle spells before committing.", "Build defensively when the enemy's fed damage dealer is deciding fights.", "Use bushes and map information; do not cross the map alone without a reason."],
-    mistakes: ["Chasing kills while losing towers or objectives.", "Copying a fixed build without checking the enemy team.", "Starting fights when teammates are too far away."]
+    intro: "A role-by-role framework for lane control, rotations, objectives and adapting your build to the enemy draft.",
+    objective: "Convert safe lane pressure into map control. Protect your farm, rotate with a clear purpose and take Turtle or Lord only when your team has enough information and nearby lane pressure.",
+    plan: ["Draft with a balanced team in mind: reliable frontline, damage, crowd control and a way to secure objectives. Identify the enemy's main damage source and strongest engage threat.", "In lane, manage the minion wave before trading or rotating. Fight around your important skill cooldowns, protect your health and avoid extended trades when the enemy wave is larger.", "After clearing your wave, rotate only when there is a useful target: help your jungler, contest river vision, defend a teammate or pressure a side lane. Return before losing unnecessary farm or tower health.", "Before Turtle or Lord, push nearby lanes, check bushes and track the enemy jungler. Start only when your team can contest safely; otherwise trade for a tower, farm or vision on the opposite side."],
+    rolePriorities: [
+      { role: "EXP Lane", focus: "Clear your wave, trade around skill cooldowns and join objective fights when your lane is safe.", avoid: "Chasing a low-value kill while your side-lane wave and tower are exposed." },
+      { role: "Jungle", focus: "Farm efficiently, track objective timers and keep Retribution ready when Turtle or Lord can be contested.", avoid: "Starting an objective while the enemy jungler is alive nearby and your team lacks vision." },
+      { role: "Mid Lane", focus: "Clear mid quickly, then rotate with your roamer to river or a side lane.", avoid: "Leaving an uncollected mid wave for a low-probability gank." },
+      { role: "Gold Lane", focus: "Prioritize safe farm and item timing; position behind your frontline and watch for enemy divers.", avoid: "Trading too much health for minor damage and losing important farm." },
+      { role: "Roam", focus: "Scout bushes, protect your team's damage dealer and engage when teammates can follow.", avoid: "Entering unverified areas alone or starting a fight outside your team's range." }
+    ],
+    buildRules: ["Identify which enemy is actually dealing the most damage, then choose physical or magic defense for that threat.", "Consider anti-heal when enemy healing or lifesteal is deciding fights; do not buy it automatically every match.", "Use penetration or defense reduction when opponents are building armor or magic resistance.", "Frontliners should prioritize survival and useful crowd control; damage dealers should protect their damage uptime through positioning.", "Treat popular builds as starting points, not rules. Re-check the enemy draft and scoreboard after each major purchase."],
+    tips: ["Check the minimap frequently and count enemies who are not visible.", "Track key enemy ultimates and battle spells before committing to a fight.", "Use bushes for information and ambushes, but do not face-check alone.", "If your team is behind, defend waves and trade objectives instead of forcing a fair fight."],
+    mistakes: ["Chasing kills while losing towers, Turtle or Lord control.", "Rotating before clearing a wave and giving up free farm.", "Copying a fixed build without checking enemy damage and sustain.", "Starting an objective while teammates are too far away or the enemy jungler is missing."]
   },
   "pubg-battlegrounds": {
     name: "PUBG: Battlegrounds", genre: "Battle Royale",
@@ -83,6 +91,20 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
             <div className="mt-4 space-y-5">
               {guide.plan.map((step, index) => <div key={step} className="flex gap-4"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-purple-500/50 bg-purple-500/15 text-sm font-black text-purple-200">{index + 1}</span><p className="pt-1 leading-7 text-slate-300">{step}</p></div>)}
             </div>
+            {guide.rolePriorities && <div className="mt-8">
+              <div className="section-kicker">Role-by-role priorities</div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {guide.rolePriorities.map((item) => <div key={item.role} className="rounded-xl border border-purple-900/60 bg-black/20 p-4">
+                  <h3 className="font-extrabold text-purple-200">{item.role}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">{item.focus}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-500"><span className="font-bold text-slate-400">Avoid:</span> {item.avoid}</p>
+                </div>)}
+              </div>
+            </div>}
+            {guide.buildRules && <div className="mt-8">
+              <div className="section-kicker">Adaptive build checklist</div>
+              <ul className="mt-4 space-y-3">{guide.buildRules.map((rule) => <li key={rule} className="flex gap-2 text-sm leading-6 text-slate-300"><CheckCircle2 className="mt-1 shrink-0 text-blue-300" size={16}/>{rule}</li>)}</ul>
+            </div>}
           </article>
           <aside className="space-y-6">
             <div className="game-card p-6">
