@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Search, Gamepad2, ChevronRight, Users, BookOpen, ShieldCheck, Swords, Menu, X } from "lucide-react";
 
 const categories = [
@@ -15,12 +16,12 @@ const categories = [
 ];
 
 const games = [
-  { name: "Mobile Legends: Bang Bang", genre: "MOBA", platform: "Mobile", description: "Hero builds, lane matchups, counters and team-fight strategy.", mark: "MLBB", art: "linear-gradient(135deg,#35175d,#174a78)" },
-  { name: "PUBG: Battlegrounds", genre: "Battle Royale", platform: "PC · Console · Mobile", description: "Drop strategies, rotations, weapon setups and survival guides.", mark: "PUBG", art: "linear-gradient(135deg,#70411e,#292b47)" },
-  { name: "Valorant", genre: "FPS", platform: "PC · Console", description: "Agent lineups, map control, crosshair and team compositions.", mark: "VALORANT", art: "linear-gradient(135deg,#672638,#252744)" },
-  { name: "Clash Royale", genre: "Strategy", platform: "Mobile", description: "Deck guides, matchup plans, elixir management and card tips.", mark: "CLASH", art: "linear-gradient(135deg,#174b76,#5b3b91)" },
-  { name: "Minecraft", genre: "Survival", platform: "PC · Console · Mobile", description: "Building, farms, redstone, survival progression and exploration.", mark: "MINECRAFT", art: "linear-gradient(135deg,#285b37,#253f69)" },
-  { name: "Genshin Impact", genre: "RPG", platform: "PC · Console · Mobile", description: "Character builds, team synergies, artifacts and exploration.", mark: "GENSHIN", art: "linear-gradient(135deg,#315f85,#553b82)" },
+  { name: "Mobile Legends: Bang Bang", slug: "mobile-legends", genre: "MOBA", platform: "Mobile", description: "Hero builds, lane matchups, counters and team-fight strategy.", mark: "MLBB", art: "linear-gradient(135deg,#35175d,#174a78)" },
+  { name: "PUBG: Battlegrounds", slug: "pubg-battlegrounds", genre: "Battle Royale", platform: "PC · Console · Mobile", description: "Drop strategies, rotations, weapon setups and survival guides.", mark: "PUBG", art: "linear-gradient(135deg,#70411e,#292b47)" },
+  { name: "Valorant", slug: "valorant", genre: "FPS", platform: "PC · Console", description: "Agent lineups, map control, crosshair and team compositions.", mark: "VALORANT", art: "linear-gradient(135deg,#672638,#252744)" },
+  { name: "Clash Royale", slug: "clash-royale", genre: "Strategy", platform: "Mobile", description: "Deck guides, matchup plans, elixir management and card tips.", mark: "CLASH", art: "linear-gradient(135deg,#174b76,#5b3b91)" },
+  { name: "Minecraft", slug: "minecraft", genre: "Survival", platform: "PC · Console · Mobile", description: "Building, farms, redstone, survival progression and exploration.", mark: "MINECRAFT", art: "linear-gradient(135deg,#285b37,#253f69)" },
+  { name: "Genshin Impact", slug: "genshin-impact", genre: "RPG", platform: "PC · Console · Mobile", description: "Character builds, team synergies, artifacts and exploration.", mark: "GENSHIN", art: "linear-gradient(135deg,#315f85,#553b82)" },
 ];
 
 const guides = [
@@ -121,7 +122,7 @@ export default function Home() {
                   <div className="game-meta"><span>{game.genre}</span><span>{game.platform}</span></div>
                   <h3 className="mt-3 text-lg font-extrabold">{game.name}</h3>
                   <p className="game-description">{game.description}</p>
-                  <button className="text-link" onClick={() => alert("Game guide pages are the next feature we'll build.")}>Explore strategies <ChevronRight className="inline" size={15}/></button>
+                  <Link className="text-link" href={`/games/${game.slug}`}>Explore strategies <ChevronRight className="inline" size={15}/></Link>
                 </div>
               </article>
             )) : <div className="empty-state">No games match that search. Try another title or category.</div>}
