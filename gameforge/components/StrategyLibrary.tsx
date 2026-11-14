@@ -7,20 +7,32 @@ type Build = { name: string; activity: string; difficulty: string; gear: string[
 type Strategy = { name: string; scenario: string; setup: string; execution: string[]; winCondition: string; adaptation: string };
 type Props = { game: string; builds: Build[]; strategies: Strategy[] };
 
-const visualByGame: Record<string, { emoji: string; label: string; accent: string; image: string; alt: string }> = {
-  "mobile-legends": { emoji: "⚔️", label: "Hero loadout", accent: "from-fuchsia-950 to-indigo-950", image: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2021/10/13/mlbb.jpg", alt: "Mobile Legends hero artwork" },
-  "pubg-battlegrounds": { emoji: "🎯", label: "Weapons & gear", accent: "from-amber-950 to-stone-950", image: "https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-m416.png", alt: "PUBG M416 assault rifle render" },
-  valorant: { emoji: "🔫", label: "Agent equipment", accent: "from-rose-950 to-slate-950", image: "https://cdn.mos.cms.futurecdn.net/6bXqNkceszqHxfYck3S3Rn.jpg", alt: "Valorant agent character artwork" },
-  "clash-royale": { emoji: "🛡️", label: "Deck cards", accent: "from-orange-950 to-purple-950", image: "https://clashroyale.inbox.supercell.com/9jtsgmsiuthj/k_YHCzHVW18wcI4601sk91QptsRVXjrx2xAJlj8qJ14/f8a6330427caa1cd370040a0b58ad3dc/24741016_1648052731.png", alt: "Clash Royale Archers card artwork" },
-  minecraft: { emoji: "⛏️", label: "Tools & resources", accent: "from-emerald-950 to-stone-950", image: "https://images.gutefrage.net/media/fragen/bilder/was-findet-ihr-besser-587/0_full.jpg?v=1692317210000", alt: "Minecraft diamond armour and tools" },
-  "genshin-impact": { emoji: "✨", label: "Character & weapon", accent: "from-cyan-950 to-violet-950", image: "https://assets.st-note.com/img/1691390903749-HvOerzUX22.png?width=1200", alt: "Genshin Impact forgeable weapon lineup" },
-  "albion-online": { emoji: "🪓", label: "Weapons & armour", accent: "from-yellow-950 to-stone-950", image: "https://bendermoney.com/storage/filemanager/file/2/1fmUEUG9lMDqacCKaylIeTNQZEMgZpTg3r6lkw8L.png", alt: "Albion Online armour equipment icons" },
+type Artwork = { image: string; alt: string; source: string };
+const visualByGame: Record<string, { emoji: string; label: string; accent: string; artwork: Artwork }> = {
+  "mobile-legends": { emoji: "⚔️", label: "Hero artwork", accent: "from-fuchsia-950 to-indigo-950", artwork: { image: "https://oneesports.blob.core.windows.net/cdn-data/sites/2/2021/04/Cyclops-2.jpg", alt: "Cyclops hero splash artwork", source: "https://www.oneesports.gg/mobile-legends/cyclops-jungler-nma-season-3/" } },
+  "pubg-battlegrounds": { emoji: "🎯", label: "Weapon render", accent: "from-amber-950 to-stone-950", artwork: { image: "https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-m416.png", alt: "PUBG M416 assault rifle render", source: "https://pubg.com/en/game-info/weapons" } },
+  valorant: { emoji: "🔫", label: "Agent artwork", accent: "from-rose-950 to-slate-950", artwork: { image: "https://cdn.mos.cms.futurecdn.net/6bXqNkceszqHxfYck3S3Rn.jpg", alt: "Valorant agent character lineup", source: "https://www.pcgamer.com/valorant-how-riot-launched-a-successful-esport-in-a-global-pandemic/" } },
+  "clash-royale": { emoji: "🛡️", label: "Deck card artwork", accent: "from-orange-950 to-purple-950", artwork: { image: "https://img.redbull.com/images/q_auto%2Cf_auto/redbullcom/2018/08/08/ee0d71b3-e544-4dd2-bbce-4bfff1857b4e/clash-royale", alt: "Clash Royale deck card artwork", source: "https://www.redbull.com/be-nl/clash-royale-decks-arena-4-5-6" } },
+  minecraft: { emoji: "⛏️", label: "Survival build artwork", accent: "from-emerald-950 to-stone-950", artwork: { image: "https://blockical.com/wp-content/uploads/2025/12/duo-starter-png.png", alt: "Minecraft starter cabins and Nether portal build", source: "https://blockical.com/all-builds/" } },
+  "genshin-impact": { emoji: "✨", label: "Team character artwork", accent: "from-cyan-950 to-violet-950", artwork: { image: "https://staticg.sportskeeda.com/editor/2024/11/57ce9-17304552501326-1920.jpg", alt: "Genshin Impact Hyperbloom team characters", source: "https://www.sportskeeda.com/esports/best-nahida-hyperbloom-team-comps-stats-rotations-gameplay-guide" } },
+  "albion-online": { emoji: "🪓", label: "Weapon & armour icons", accent: "from-yellow-950 to-stone-950", artwork: { image: "https://www.gamersdecide.com/sites/default/files/styles/responsive_image_512xauto/public/authors/u161773/dreaded_bloodletter.jpg?itok=miBCjKSZ", alt: "Albion Online tier VIII weapon and armour icons", source: "https://www.gamersdecide.com/articles/albion-online-best-class-builds" } },
+};
+
+const buildArtwork: Record<string, Artwork> = {
+  "Durable burst mage — Cyclops mid": { image: "https://oneesports.blob.core.windows.net/cdn-data/sites/2/2021/04/Cyclops-2.jpg", alt: "Cyclops hero artwork for the mid-lane build", source: "https://www.oneesports.gg/mobile-legends/cyclops-jungler-nma-season-3/" },
+  "Peel-first tank roamer": { image: "https://mobilegame.dailytech.id/img/games/minotaur.webp", alt: "Minotaur tank hero artwork", source: "https://mobilegame.dailytech.id/build-minotaur-tersakit/" },
+  "Anti-frontline EXP fighter": { image: "https://media.hitekno.com/thumbs/2023/01/05/56758-hero-mobile-legends-lapu-lapu/730x480-img-56758-hero-mobile-legends-lapu-lapu.jpg", alt: "Lapu-Lapu fighter hero artwork", source: "https://www.hitekno.com/games/2023/02/09/185549/3-fighter-paling-efektif-buat-counter-lapu-lapu-di-exp-lane-mobile-legends-auto-mendominasi" },
+  "Balanced AR + DMR": { image: "https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-m416.png", alt: "PUBG M416 assault rifle", source: "https://pubg.com/en/game-info/weapons" },
+  "Compound breach kit": { image: "https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-s1897.png", alt: "PUBG S1897 shotgun", source: "https://d3tpthp8lq9ou3.cloudfront.net/ja/game-info/weapons/sg" },
+  "Long-range overwatch": { image: "https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-mini14.png", alt: "PUBG Mini-14 designated marksman rifle", source: "https://pubg.com/en/game-info/weapons/dmr" },
+  "Compact starter survival base": { image: "https://blockical.com/wp-content/uploads/2025/12/duo-starter-png.png", alt: "Minecraft starter survival base", source: "https://blockical.com/all-builds/" },
+  "Nether portal travel hub": { image: "https://blockical.com/wp-content/uploads/2025/12/duo-starter-png.png", alt: "Minecraft base with a Nether portal", source: "https://blockical.com/all-builds/" },
 };
 
 export default function StrategyLibrary({ game, builds, strategies }: Props) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<"all" | "build" | "strategy">("all");
-  const visual = visualByGame[game] || { emoji: "🎮", label: "Game setup", accent: "from-purple-950 to-slate-950", image: "", alt: "Game setup artwork" };
+  const visual = visualByGame[game] || { emoji: "🎮", label: "Game setup", accent: "from-purple-950 to-slate-950", artwork: { image: "", alt: "Game setup artwork", source: "" } };
   const items = useMemo(() => [
     ...builds.map((item) => ({ ...item, type: "build" as const, searchable: [item.name, item.activity, item.difficulty, ...item.gear, ...item.skills, ...item.play].join(" ") })),
     ...strategies.map((item) => ({ ...item, type: "strategy" as const, searchable: [item.name, item.scenario, item.setup, ...item.execution, item.winCondition, item.adaptation].join(" ") })),
@@ -43,11 +55,12 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
       <div className="mt-3 grid gap-4">
         {items.map((item) => <article key={item.type + item.name} className="overflow-hidden rounded-2xl border border-purple-900/50 bg-black/25">
           <div className={`relative flex min-h-32 items-center gap-4 overflow-hidden bg-gradient-to-br ${visual.accent} p-4 sm:min-h-36 sm:px-6`}>
-            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28">{visual.image ? <img src={visual.image} alt={visual.alt} loading="lazy" className="h-full w-full object-cover" onError={(event) => { event.currentTarget.style.display = "none"; }}/> : null}<span className="absolute text-4xl drop-shadow-lg" aria-hidden="true">{visual.emoji}</span></div>
+            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28">{(item.type === "build" ? buildArtwork[item.name] : undefined)?.image || visual.artwork.image ? <img src={(item.type === "build" ? buildArtwork[item.name] : undefined)?.image || visual.artwork.image} alt={(item.type === "build" ? buildArtwork[item.name] : undefined)?.alt || visual.artwork.alt} loading="lazy" className="h-full w-full object-cover" onError={(event) => { event.currentTarget.style.display = "none"; }}/> : null}<span className="absolute text-4xl drop-shadow-lg" aria-hidden="true">{visual.emoji}</span></div>
             <div className="relative z-10 min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-200/80">{visual.label} · {item.type === "build" ? "Build" : "Custom tactic"}</p>
               <h3 className="mt-2 text-lg font-extrabold text-white sm:text-xl">{item.name}</h3>
               <p className="mt-1 text-xs text-slate-300">{item.type === "build" ? item.activity : item.scenario}</p>
+              <a href={(item.type === "build" ? buildArtwork[item.name] : undefined)?.source || visual.artwork.source} target="_blank" rel="noreferrer" className="mt-2 inline-block text-[10px] text-blue-200/70 underline underline-offset-2">Image source</a>
             </div>
             <div className="pointer-events-none absolute -right-5 -top-8 h-36 w-36 rounded-full border border-white/10"/>
             <div className="pointer-events-none absolute -bottom-14 right-16 h-36 w-36 rounded-full border border-white/10"/>
