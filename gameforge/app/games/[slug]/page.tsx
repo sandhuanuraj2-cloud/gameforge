@@ -38,10 +38,6 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     tips: ["Check the minimap frequently and count enemies who are not visible.", "Track key enemy ultimates and battle spells before committing to a fight.", "Use bushes for information and ambushes, but do not face-check alone.", "If your team is behind, defend waves and trade objectives instead of forcing a fair fight."],
     mistakes: ["Chasing kills while losing towers, Turtle or Lord control.", "Rotating before clearing a wave and giving up free farm.", "Copying a fixed build without checking enemy damage and sustain.", "Starting an objective while teammates are too far away or the enemy jungler is missing."]
   },
-    buildRules: ["Identify which enemy is actually dealing the most damage, then choose physical or magic defense for that threat.", "Consider anti-heal when enemy healing or lifesteal is deciding fights; do not buy it automatically every match.", "Use penetration or defense reduction when opponents are building armor or magic resistance.", "Frontliners should prioritize survival and useful crowd control; damage dealers should protect their damage uptime through positioning.", "Treat popular builds as starting points, not rules. Re-check the enemy draft and scoreboard after each major purchase."],
-    tips: ["Check the minimap frequently and count enemies who are not visible.", "Track key enemy ultimates and battle spells before committing to a fight.", "Use bushes for information and ambushes, but do not face-check alone.", "If your team is behind, defend waves and trade objectives instead of forcing a fair fight."],
-    mistakes: ["Chasing kills while losing towers, Turtle or Lord control.", "Rotating before clearing a wave and giving up free farm.", "Copying a fixed build without checking enemy damage and sustain.", "Starting an objective while teammates are too far away or the enemy jungler is missing."]
-  },
   "pubg-battlegrounds": {
     name: "PUBG: Battlegrounds", genre: "Battle Royale",
     intro: "A survival-first framework for smarter drops, rotations and fights.",
