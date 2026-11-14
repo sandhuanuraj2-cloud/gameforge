@@ -15,6 +15,7 @@ export default function CommunityPage(){
  sessionUserIdRef.current=session?.user.id;
  const configured=Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>subscription.unsubscribe()},[supabase]);
+ useEffect(()=>{if(!session){setChannels([]);setActive(null);setMessages([]);setMessage("");setInviteCode("")}},[session]);
  const loadChannels=useCallback(async()=>{if(!supabase||!session)return;const userId=session.user.id;const {data,error}=await supabase.from("channels").select("id,name,is_private,invite_code,created_by").order("created_at",{ascending:false});if(sessionUserIdRef.current!==userId)return;if(error)setNotice(error.message);else{const list=(data||[]) as Channel[];setChannels(list);setActive(old=>old&&list.some(c=>c.id===old.id)?old:(list[0]||null));}},[supabase,session]);
  useEffect(()=>{void loadChannels()},[loadChannels]);
  useEffect(()=>{if(!supabase||!session)return;const sub=supabase.channel("channel-directory-"+session.user.id).on("postgres_changes",{event:"*",schema:"public",table:"channels"},()=>{void loadChannels()}).subscribe();return()=>{supabase.removeChannel(sub)}},[supabase,session,loadChannels]);
