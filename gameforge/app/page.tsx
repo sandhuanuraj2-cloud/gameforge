@@ -11,8 +11,7 @@ const categories = [
   { name: "RPG", icon: "🐉", count: "Classes, quests & gear" },
   { name: "Strategy", icon: "♟️", count: "Decks & decision-making" },
   { name: "Survival", icon: "🔥", count: "Crafting & progression" },
-  { name: "Sports", icon: "🏆", count: "Formations & tactics" },
-  { name: "Racing", icon: "🏎️", count: "Tuning & driving lines" },
+  { name: "MMORPG", icon: "🛡️", count: "Open-world builds & PvP" },
 ];
 
 const games = [
@@ -81,7 +80,7 @@ export default function Home() {
           <p className="hero-copy">Find smarter strategies, sharper builds and practical guides for the games you love. From mobile battles to PC and console competition.</p>
           <div className="search-wrap">
             <Search size={19} className="shrink-0 text-purple-300"/>
-            <input aria-label="Search games" value={query} onChange={(e) => { setQuery(e.target.value); browseGames(); }} placeholder="Search games, genres or platforms..."/>
+            <input aria-label="Search games" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search games, genres or platforms..."/>
             <button className="primary-btn" onClick={browseGames}>Explore</button>
           </div>
           <p className="mt-4 text-xs text-slate-500">PC · MOBILE · CONSOLE</p>
