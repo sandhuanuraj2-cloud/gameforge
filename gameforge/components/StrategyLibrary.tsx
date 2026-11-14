@@ -48,6 +48,12 @@ const buildArtwork: Record<string, Artwork> = {
   "Damnation Staff ZvZ backline support": { image: "https://render.albiononline.com/v1/item/T8_2H_DEMONICSTAFF.png", alt: "Albion Online Damnation Staff item render", source: "https://albiononline.com/news/art-spotlight-magic-staffs" },
 };
 
+function ArtworkImage({ artwork, fallback }: { artwork?: Artwork; fallback: string }) {
+  const [failed, setFailed] = useState(false);
+  if (!artwork?.image || failed) return <span className="absolute text-4xl drop-shadow-lg" aria-hidden="true">{fallback}</span>;
+  return <Image src={artwork.image} alt={artwork.alt} fill unoptimized sizes="(max-width: 640px) 96px, 112px" className="object-cover" onError={() => setFailed(true)} />;
+}
+
 export default function StrategyLibrary({ game, builds, strategies }: Props) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<"all" | "build" | "strategy">("all");
@@ -74,7 +80,7 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
       <div className="mt-3 grid gap-4">
         {items.map((item) => <article key={item.type + item.name} className="overflow-hidden rounded-2xl border border-purple-900/50 bg-black/25">
           <div className={`relative flex min-h-32 items-center gap-4 overflow-hidden bg-gradient-to-br ${visual.accent} p-4 sm:min-h-36 sm:px-6`}>
-            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28">{(item.type === "build" ? buildArtwork[item.name] : undefined)?.image || visual.artwork.image ? <Image src={(item.type === "build" ? buildArtwork[item.name] : undefined)?.image || visual.artwork.image} alt={(item.type === "build" ? buildArtwork[item.name] : undefined)?.alt || visual.artwork.alt} fill unoptimized sizes="(max-width: 640px) 96px, 112px" className="object-cover"/> : null}{!((item.type === "build" ? buildArtwork[item.name] : undefined)?.image || visual.artwork.image) && <span className="absolute text-4xl drop-shadow-lg" aria-hidden="true">{visual.emoji}</span>}</div>
+            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28"><ArtworkImage artwork={(item.type === "build" ? buildArtwork[item.name] : undefined) || visual.artwork} fallback={visual.emoji}/></div>
             <div className="relative z-10 min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-200/80">{visual.label} · {item.type === "build" ? "Build" : "Custom tactic"}</p>
               <h3 className="mt-2 text-lg font-extrabold text-white sm:text-xl">{item.name}</h3>
