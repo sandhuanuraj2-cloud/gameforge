@@ -61,7 +61,7 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
   const items = useMemo(() => [
     ...builds.map((item) => ({ ...item, type: "build" as const, searchable: [item.name, item.activity, item.difficulty, ...item.gear, ...item.skills, ...item.play, buildArtwork[item.name]?.alt || ""].join(" ") })),
     ...strategies.map((item) => ({ ...item, type: "strategy" as const, searchable: [item.name, item.scenario, item.setup, ...item.execution, item.winCondition, item.adaptation, visual.artwork.alt].join(" ") })),
-  ].filter((item) => (kind === "all" || item.type === kind) && (!query.trim() || item.searchable.toLowerCase().includes(query.trim().toLowerCase()))), [builds, strategies, query, kind]);
+  ].filter((item) => (kind === "all" || item.type === kind) && (!query.trim() || item.searchable.toLowerCase().includes(query.trim().toLowerCase()))), [builds, strategies, query, kind, game]);
 
   return <section className="mt-10" id="strategy-library">
     <div className="section-kicker">Find your setup</div>
