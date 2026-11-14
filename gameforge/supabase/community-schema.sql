@@ -24,19 +24,23 @@ create table if not exists public.messages(
 );
 create index if not exists messages_channel_created_idx on public.messages(channel_id,created_at);
 
--- SECURITY DEFINER avoids recursive RLS policies across channels and memberships.
-create or replace function public.can_access_channel(_channel_id uuid,_user_id uuid)
-returns boolean language sql stable security definer set search_path=public as $$
+-- Keep the RLS helper outside the exposed Data API schema. It derives the caller
+-- from auth.uid() so callers cannot probe access for another user.
+create schema if not exists private;
+revoke all on schema private from public, anon;
+grant usage on schema private to authenticated;
+create or replace function private.can_access_channel(_channel_id uuid)
+returns boolean language sql stable security definer set search_path='' as $
  select exists(
   select 1 from public.channels c where c.id=_channel_id and (
-   not c.is_private or c.created_by=_user_id or exists(
-    select 1 from public.channel_members m where m.channel_id=c.id and m.user_id=_user_id
+   not c.is_private or c.created_by=(select auth.uid()) or exists(
+    select 1 from public.channel_members m where m.channel_id=c.id and m.user_id=(select auth.uid())
    )
   )
  );
-$$;
-revoke all on function public.can_access_channel(uuid,uuid) from public;
-grant execute on function public.can_access_channel(uuid,uuid) to authenticated;
+$;
+revoke all on function private.can_access_channel(uuid) from public, anon;
+grant execute on function private.can_access_channel(uuid) to authenticated;
 
 alter table public.channels enable row level security;
 alter table public.channel_members enable row level security;
@@ -45,7 +49,7 @@ alter table public.messages enable row level security;
 drop policy if exists "Members can view channels" on public.channels;
 drop policy if exists "Read visible channels" on public.channels;
 create policy "Read visible channels" on public.channels for select to authenticated
-using(public.can_access_channel(id,auth.uid()));
+using(private.can_access_channel(id));
 drop policy if exists "Authenticated users can create channels" on public.channels;
 drop policy if exists "Create own channels" on public.channels;
 create policy "Create own channels" on public.channels for insert to authenticated with check(created_by=auth.uid());
@@ -59,19 +63,19 @@ create policy "Read own memberships" on public.channel_members for select to aut
 drop policy if exists "Users can join channels" on public.channel_members;
 drop policy if exists "Join public or own channels" on public.channel_members;
 create policy "Join accessible channels" on public.channel_members for insert to authenticated
-with check(user_id=auth.uid() and public.can_access_channel(channel_id,auth.uid()));
+with check(user_id=auth.uid() and private.can_access_channel(channel_id));
 
 drop policy if exists "Members can read messages" on public.messages;
 drop policy if exists "Read allowed messages" on public.messages;
 create policy "Read allowed messages" on public.messages for select to authenticated
-using(public.can_access_channel(channel_id,auth.uid()));
+using(private.can_access_channel(channel_id));
 drop policy if exists "Members can send messages" on public.messages;
 drop policy if exists "Send allowed messages" on public.messages;
 create policy "Send allowed messages" on public.messages for insert to authenticated
-with check(user_id=auth.uid() and public.can_access_channel(channel_id,auth.uid()));
+with check(user_id=auth.uid() and private.can_access_channel(channel_id));
 
 create or replace function public.join_channel_by_invite(invite text)
-returns uuid language plpgsql security definer set search_path=public as $$
+returns uuid language plpgsql security definer set search_path='' as $
 declare channel_uuid uuid;
 begin
  if auth.uid() is null then raise exception 'Sign in required'; end if;
@@ -81,8 +85,14 @@ begin
  return channel_uuid;
 end;
 $$;
-revoke all on function public.join_channel_by_invite(text) from public;
+revoke all on function public.join_channel_by_invite(text) from public, anon;
 grant execute on function public.join_channel_by_invite(text) to authenticated;
+
+-- Explicit Data API grants are required for public-schema tables on current projects.
+grant usage on schema public to authenticated;
+grant select, insert, update on public.channels to authenticated;
+grant select, insert on public.channel_members to authenticated;
+grant select, insert on public.messages to authenticated;
 
 do $$
 begin
