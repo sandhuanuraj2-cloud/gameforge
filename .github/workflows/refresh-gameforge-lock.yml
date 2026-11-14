@@ -8,6 +8,9 @@ on:
       - .github/workflows/refresh-gameforge-lock.yml
 permissions:
   contents: write
+concurrency:
+  group: gameforge-validation-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   validate:
     runs-on: ubuntu-latest
