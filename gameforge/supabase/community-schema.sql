@@ -31,7 +31,7 @@ create schema if not exists private;
 revoke all on schema private from public, anon;
 grant usage on schema private to authenticated;
 create or replace function private.can_access_channel(_channel_id uuid)
-returns boolean language sql stable security definer set search_path='' as $
+returns boolean language sql stable security definer set search_path='' as $$
  select exists(
   select 1 from public.channels c where c.id=_channel_id and (
    not c.is_private or c.created_by=(select auth.uid()) or exists(
@@ -39,7 +39,7 @@ returns boolean language sql stable security definer set search_path='' as $
    )
   )
  );
-$;
+$$;
 revoke all on function private.can_access_channel(uuid) from public, anon;
 grant execute on function private.can_access_channel(uuid) to authenticated;
 
@@ -76,7 +76,7 @@ create policy "Send allowed messages" on public.messages for insert to authentic
 with check(user_id=auth.uid() and private.can_access_channel(channel_id));
 
 create or replace function public.join_channel_by_invite(invite text)
-returns uuid language plpgsql security definer set search_path='' as $
+returns uuid language plpgsql security definer set search_path='' as $$
 declare channel_uuid uuid;
 begin
  if auth.uid() is null then raise exception 'Sign in required'; end if;
