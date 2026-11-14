@@ -123,3 +123,12 @@ button { cursor: pointer; }
   .search-wrap { padding-left:13px; }
   .search-wrap .primary-btn { padding:11px 13px; }
 }
+
+/* GAMEFORGE Community */
+.panel{border:1px solid #292640;border-radius:16px;background:#11111f}
+.community-input{width:100%;border:1px solid #38334f;border-radius:10px;background:#090916;color:#fff;padding:11px 12px;outline:none;font-size:.88rem}
+.community-input:focus{border-color:#9b5cff}
+.secondary-btn,.danger-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #38334f;border-radius:9px;padding:9px 12px;color:#d8d5e8;background:#19182a;font-size:.8rem;font-weight:750}
+.danger-btn{border-color:#71333c;background:#32151e;color:#ffb7c1}
+.channel-row{display:flex;width:100%;align-items:center;gap:9px;border-radius:9px;padding:10px;text-align:left;color:#aaa8bd;font-size:.88rem}
+.channel-row:hover,.channel-active{background:#27203d;color:#fff}
