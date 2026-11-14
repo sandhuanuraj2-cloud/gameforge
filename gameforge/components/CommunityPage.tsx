@@ -16,7 +16,7 @@ export default function CommunityPage(){
  const loadChannels=useCallback(async()=>{if(!supabase||!session)return;const {data,error}=await supabase.from("channels").select("id,name,is_private,invite_code,created_by").order("created_at",{ascending:false});if(error)setNotice(error.message);else{const list=(data||[]) as Channel[];setChannels(list);setActive(old=>old&&list.some(c=>c.id===old.id)?old:(list[0]||null));}},[supabase,session]);
  useEffect(()=>{void loadChannels()},[loadChannels]);
  const activeChannelId=active?.id;
- useEffect(()=>{if(!supabase||!session||!activeChannelId){setMessages([]);return}let alive=true;
+ useEffect(()=>{if(!supabase||!session||!activeChannelId){setMessages([]);return}let alive=true;setMessages([]);
   supabase.from("messages").select("*").eq("channel_id",activeChannelId).order("created_at",{ascending:false}).limit(100).then(({data,error})=>{if(alive){if(error)setNotice(error.message);else setMessages(current=>{const merged=[...(data||[]) as Message[],...current];return Array.from(new Map(merged.map(item=>[item.id,item])).values()).sort((a,b)=>a.created_at.localeCompare(b.created_at)).slice(-100)})}});
   const sub=supabase.channel("chat-"+activeChannelId).on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"channel_id=eq."+activeChannelId},payload=>setMessages(old=>[...old.filter(m=>m.id!==(payload.new as Message).id),payload.new as Message].sort((a,b)=>a.created_at.localeCompare(b.created_at)).slice(-100))).subscribe();
   return()=>{alive=false;supabase.removeChannel(sub)}
