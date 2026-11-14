@@ -59,9 +59,9 @@ export default function Home() {
             <a className="nav-link" href="#games">Games</a>
             <a className="nav-link" href="#categories">Categories</a>
             <a className="nav-link" href="#guides">Guides</a>
-            <a className="nav-link" href="#community">Community</a>
+            <a className="nav-link" href="/community">Community</a>
           </nav>
-          <a href="#community" className="primary-btn hidden sm:inline-flex">Join the community</a>
+          <a href="/community" className="primary-btn hidden sm:inline-flex">Join the community</a>
           <button className="rounded-lg border border-purple-900 p-2 md:hidden" aria-label="Toggle navigation" onClick={() => setMobileMenu(!mobileMenu)}>
             {mobileMenu ? <X size={20}/> : <Menu size={20}/>}
           </button>
@@ -70,7 +70,7 @@ export default function Home() {
           <a className="nav-link" href="#games" onClick={() => setMobileMenu(false)}>Games</a>
           <a className="nav-link" href="#categories" onClick={() => setMobileMenu(false)}>Categories</a>
           <a className="nav-link" href="#guides" onClick={() => setMobileMenu(false)}>Guides</a>
-          <a className="nav-link" href="#community" onClick={() => setMobileMenu(false)}>Community</a>
+          <a className="nav-link" href="/community" onClick={() => setMobileMenu(false)}>Community</a>
         </nav>}
       </header>
 
