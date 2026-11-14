@@ -43,6 +43,9 @@ jobs:
       - name: Install dependencies
         working-directory: gameforge
         run: npm ci
+      - name: Production dependency audit
+        working-directory: gameforge
+        run: npm audit --omit=dev --audit-level=moderate
       - name: Dependency audit summary
         working-directory: gameforge
         run: |
