@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Target, Lightbulb, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
 
-const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[]; lanePlans?: { role: string; early: string; mid: string; late: string; emblem: string; spell: string; build: string; }[]; matchups?: { lane: string; pick: string; why: string; warning: string; }[]; phases?: { phase: string; priorities: string[] }[] }> = {
+const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[]; lanePlans?: { role: string; early: string; mid: string; late: string; emblem: string; spell: string; build: string; }[]; matchups?: { lane: string; pick: string; why: string; warning: string; }[]; phases?: { phase: string; priorities: string[] }[]; builds?: { name: string; activity: string; difficulty: string; gear: string[]; skills: string[]; play: string[]; warning: string }[] }> = {
   "mobile-legends": {
     name: "Mobile Legends: Bang Bang", genre: "MOBA",
     intro: "A role-by-role framework for lane control, rotations, objectives and adapting your build to the enemy draft.",
@@ -110,6 +110,59 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     tips: ["Carry a water bucket when exploring high places or caves.", "Light up caves and your base perimeter to reduce hostile mob spawns.", "Store valuable items before attempting a risky exploration."],
     mistakes: ["Mining straight down or digging directly above yourself.", "Exploring without food, light or an escape route.", "Carrying every valuable item on a dangerous trip."]
   },
+  "albion-online": {
+    name: "Albion Online", genre: "MMORPG",
+    intro: "Practical equipment builds for solo PvE, solo PvP and open-world roaming. Every setup lists the gear, skill choices and fight plan.",
+    objective: "Choose a build for the activity you are actually doing. In lethal zones, bring a set you can replace, understand your escape options and never assume a popular loadout wins every matchup.",
+    builds: [
+      {
+        name: "Battleaxe beginner all-rounder",
+        activity: "Solo open-world PvE · Mists · first PvP fights",
+        difficulty: "Beginner · forgiving sustain",
+        gear: ["Main hand: Battleaxe", "Off hand: Torch", "Head: Hunter Hood", "Chest: Mercenary Jacket", "Shoes: Soldier Boots", "Cape: Thetford Cape", "Food: Beef Stew", "Potion: Healing Potion", "Mount: Armored Horse"],
+        skills: ["Q: Rending Rage", "W: Adrenaline Boost", "E: Blood Bandit", "Passive: Deep Cuts"],
+        play: ["Use Adrenaline Boost to close distance or reposition.", "Build pressure with Rending Rage and basic attacks.", "Save Blood Bandit until you have lost health and can hit the enemy or several mobs.", "Use Mercenary Jacket after your weapon heal window rather than activating both heals together."],
+        warning: "This is a forgiving starter, not a hard counter to ranged kiting. Do not chase a mobile opponent across the map. The reference gear is T5; start cheaper if you are still learning."
+      },
+      {
+        name: "Dual Swords solo PvP",
+        activity: "Open-world solo · Mists · hybrid PvE/PvP",
+        difficulty: "Beginner to intermediate · mobile melee",
+        gear: ["Main hand: Dual Swords (two-handed)", "Head: Guardian Helmet", "Chest: Mercenary Jacket", "Shoes: Soldier Boots", "Cape: Thetford Cape", "Food: Beef Stew", "Potion: Healing Potion", "Mount: Armored Horse"],
+        skills: ["Q: Heroic Strike", "W: Blade Cyclone", "E: Spinning Blades", "Passive: Deep Cuts"],
+        play: ["Build Heroic Charges with Heroic Strike before committing.", "Stay close; the build loses pressure when ranged enemies kite you.", "Use Blade Cyclone for damage and repositioning.", "Hold Spinning Blades until the opponent has spent a dash or defensive skill.", "Use Guardian Helmet and Mercenary Jacket as separate defensive windows."],
+        warning: "The reference starter set is T5. Dual Swords are versatile but not an automatic win against every weapon. Swap Guardian Helmet for Mercenary Hood when you want more offensive pressure and understand the matchup."
+      },
+      {
+        name: "Bloodletter roaming assassin",
+        activity: "Solo open-world PvP · Mists · ganking · gathering escape",
+        difficulty: "Intermediate · pick fights and disengage",
+        gear: ["Main hand: Bloodletter", "Off hand: Mistcaller", "Head: Mercenary Hood", "Chest: Stalker Jacket", "Shoes: Scholar Sandals", "Cape: Undead Cape", "Food: Beef Stew", "Potion: Healing Potion", "Mount: Armored Horse"],
+        skills: ["Q: Deadly Swipe", "W: Dash", "E: Lunging Stabs"],
+        play: ["Look for isolated targets, gatherers or players already weakened by mobs.", "Use Dash to engage only when you have a clean angle; keep mobility available if the fight turns.", "Pressure with Deadly Swipe and basic attacks.", "Hold Lunging Stabs for its execute window when the target is below roughly 40% health.", "Disengage if the enemy survives your burst and the matchup turns against you."],
+        warning: "This is a pick-and-finish build, not a stand-and-trade bruiser. Do not spend your escape tools just to start a fight. The reference loadout is T6/T6.1."
+      },
+      {
+        name: "Fire Staff solo fame farming",
+        activity: "Solo PvE · open-world mobs · solo dungeons",
+        difficulty: "Beginner · ranged damage",
+        gear: ["Main hand: Fire Staff", "Off hand: Tome of Spells", "Head: Scholar Cowl", "Chest: Cleric Robe", "Shoes: Mercenary Shoes", "Cape: regular Cape (upgrade only if affordable)", "Food: Cabbage Soup", "Potion: Healing Potion"],
+        skills: ["Q: Fire Bolt", "W: Flame Blast", "E: Pyroblast", "Passive: Burn"],
+        play: ["Keep range and group mobs before spending area damage.", "Use Fire Bolt for repeatable damage and Flame Blast to add burst.", "Use Pyroblast when you have a safe cast window; do not stand still in avoidable attacks.", "Use Scholar Cowl for energy/defense and Cleric Robe's shield when you are pressured.", "Use food and healing between pulls to keep farming downtime low."],
+        warning: "This is a PvE farming setup, not a safe solo-PvP build. Fire Staff has limited mobility and can be punished by dives. A group build or open-world PvP build needs different gear and skills."
+      }
+    ],
+    phases: [
+      { phase: "Before leaving town", priorities: ["Check the activity and zone rules; yellow-zone knockdowns and lethal-zone full loot are not the same risk.", "Buy a replacement set and consumables before taking expensive gear out.", "Repair, set skills and confirm your mount and escape plan."] },
+      { phase: "During the run", priorities: ["Watch the minimap and nearby nameplates; do not tunnel on mobs or gathering nodes.", "Avoid fighting multiple players alone unless your build is designed to escape.", "Use cooldowns with a purpose and keep at least one mobility or defensive option for disengaging."] },
+      { phase: "After a fight", priorities: ["Loot only when the area is safe; nearby players may be waiting.", "Review whether you lost because of matchup, item power, cooldown timing or positioning.", "Replace lost gear with the same affordable set before upgrading."] }
+    ],
+    buildRules: ["Treat these as reference loadouts, not universal best-in-slot builds. Albion's weapon balance and activity meta change.", "Start around T4.1–T5.0 while learning; move toward T6.1 only when the silver loss is comfortable.", "In lethal full-loot zones, never wear gear you cannot afford to lose repeatedly.", "Choose food and potions for the activity: damage food for pressure, healing for sustain, and defensive potions when the matchup demands them.", "Weapon specialization and item power matter, but a good matchup and correct cooldown use often matter more than blindly upgrading tiers."]
+    ],
+    plan: ["Pick one main weapon and level its specialization instead of spreading fame across many unrelated trees.", "Use the Battleaxe if you want a forgiving first solo set, Dual Swords for straightforward melee pressure, Bloodletter for mobile roaming, or Fire Staff for safer ranged PvE damage.", "Practice your Q/W/E rotation in non-lethal content before risking a set in lethal zones.", "Check market prices before buying and keep a reserve of silver for replacement sets."]
+    ,tips: ["Inspect enemy weapon and armor before committing when possible.", "Use terrain, mobs and exits to control whether a fight can start or end.", "A mount is part of your escape plan; dismount only when you are ready to commit.", "Keep an affordable spare set in the bank so one death does not stop progression."]
+    ,mistakes: ["Taking your most expensive gear into a lethal zone before you understand the matchup.", "Using every defensive and mobility cooldown at the start of a fight.", "Chasing ranged weapons that can kite you indefinitely.", "Copying a group ZvZ build for solo Mists or using a PvE farming build for PvP."]
+  },
   "genshin-impact": {
     name: "Genshin Impact", genre: "RPG",
     intro: "Build effective teams by combining roles, reactions, energy needs and investment priorities.",
@@ -211,6 +264,23 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
                 {guide.phases.map((item) => <section key={item.phase} className="rounded-xl border border-purple-900/60 bg-black/20 p-4">
                   <h3 className="font-extrabold text-purple-200">{item.phase}</h3>
                   <ul className="mt-3 space-y-2">{item.priorities.map((priority) => <li key={priority} className="flex gap-2 text-sm leading-6 text-slate-300"><span className="text-blue-300">•</span>{priority}</li>)}</ul>
+                </section>)}
+              </div>
+            </div>}
+            {guide.builds && <div className="mt-10">
+              <div className="section-kicker">Equipment builds</div>
+              <h2 className="mt-2 text-2xl font-black">Choose your loadout</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">Gear is a reference template. Check current market prices and patch changes before buying.</p>
+              <div className="mt-4 space-y-4">
+                {guide.builds.map((build) => <section key={build.name} className="rounded-2xl border border-purple-900/60 bg-black/20 p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-lg font-extrabold text-purple-200">{build.name}</h3><span className="rounded-full border border-blue-900/60 px-3 py-1 text-xs text-blue-200">{build.difficulty}</span></div>
+                  <p className="mt-1 text-xs font-bold uppercase tracking-wider text-slate-500">{build.activity}</p>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Equipment</p><ul className="mt-2 space-y-1">{build.gear.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
+                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Skills</p><ul className="mt-2 space-y-1">{build.skills.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
+                  </div>
+                  <div className="mt-4 border-t border-white/10 pt-4"><p className="text-xs font-bold uppercase tracking-wider text-purple-300">How to play</p><ol className="mt-2 list-decimal space-y-1 pl-5">{build.play.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ol></div>
+                  <p className="mt-4 rounded-lg border border-amber-900/40 bg-amber-950/10 p-3 text-xs leading-5 text-amber-100/80"><strong>Limit:</strong> {build.warning}</p>
                 </section>)}
               </div>
             </div>}
