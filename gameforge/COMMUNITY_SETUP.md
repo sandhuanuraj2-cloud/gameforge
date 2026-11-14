@@ -1,56 +1,38 @@
 # GAMEFORGE Community setup
 
-The community feature uses Supabase for player accounts, channel data and live text chat. LiveKit provides voice rooms.
+The community feature uses Supabase for player accounts, channel data and real-time text chat.
 
-## 1. Create a Supabase project
+## 1. Supabase project
 
-1. Create a free project at https://supabase.com/dashboard.
-2. Open **Project Settings → API**.
-3. Copy the Project URL and the **anon/public** key. Do not use the service-role key in the browser.
-4. Open **SQL Editor → New query**.
-5. Paste and run the contents of `gameforge/supabase/community-schema.sql`.
+1. Open your Supabase project and go to **Project Settings → API**.
+2. Copy the Project URL and the **publishable** key (or legacy anon/public key). Never use the service-role or secret key in the browser.
+3. Open **SQL Editor → New query** and run `gameforge/supabase/community-schema.sql` if it has not already been applied.
 
 The SQL creates channels, private-channel membership, messages, row-level security policies and the invite-code join function.
 
-## 2. Create a LiveKit project
+## 2. Add environment variables to Vercel Preview
 
-1. Create a free project at https://cloud.livekit.io/.
-2. Open the project's API keys page.
-3. Copy the WebSocket URL, API key and API secret.
-
-The API secret must remain server-side. Never add it to GitHub or a `NEXT_PUBLIC_*` variable.
-
-## 3. Add environment variables to Vercel Preview
-
-In the Vercel project connected to this repository, open **Settings → Environment Variables**. Add these variables for **Preview**. If you use branch-specific Preview variables, set the Git branch to `gameforge/mvp-guides`.
+In the Vercel project connected to this repository, open **Settings → Environment Variables**. Add these for **Preview**, preferably scoped to branch `gameforge/mvp-guides`:
 
 | Variable | Value |
 |---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase Project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
-| `NEXT_PUBLIC_LIVEKIT_URL` | LiveKit WebSocket URL (starts with `wss://`) |
-| `LIVEKIT_API_KEY` | LiveKit API key |
-| `LIVEKIT_API_SECRET` | LiveKit API secret |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase publishable/anon key |
 
-Keep the LiveKit API key and secret as encrypted/sensitive server environment variables. Only the first three values are public browser configuration.
+Do not add a Supabase service-role or secret key to a `NEXT_PUBLIC_*` variable or commit credentials to GitHub.
 
-This project has several Vercel projects linked to the same repository. Configure the variables on whichever Preview project you use to open GAMEFORGE. The other linked projects may continue to create redundant preview builds.
+## 3. Test on a Preview URL
 
-## 4. Test on a Preview URL
-
-After saving the environment variables, trigger a new Preview build for branch `gameforge/mvp-guides` (not Production). Open the Preview URL and:
+After saving the variables, trigger a Preview build for `gameforge/mvp-guides` (not Production). Test:
 
 1. Create an account with email and password.
 2. Confirm the email if Supabase email confirmation is enabled.
 3. Create a public channel and send a message.
 4. Create a private channel, copy its invite code, and join it from another account.
-5. Join the voice room and allow microphone access.
-
-Use HTTPS and headphones for voice testing. Browser microphone permission is required.
+5. Confirm that private channels and messages are not visible to unauthorized users.
 
 ## Notes
 
-- No Production deployment is required for this setup.
-- The Supabase anon/public key is designed to be exposed in the browser; database access is controlled by the included row-level security policies.
-- Do not paste secrets into chat or commit them to the repository.
-- Free service plans have usage limits; check the provider dashboards as usage grows.
+- This version supports text chat only. Voice chat may be added later.
+- Supabase database access is controlled by the included row-level security policies.
+- Free service plans have usage limits; check the provider dashboard as usage grows.
