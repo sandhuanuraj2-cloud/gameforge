@@ -40,6 +40,11 @@ jobs:
       - name: Install dependencies
         working-directory: gameforge
         run: npm ci
+      - name: Dependency audit summary
+        working-directory: gameforge
+        run: |
+          npm audit --json > /tmp/gameforge-audit.json || true
+          node -e 'const r=require("/tmp/gameforge-audit.json"); for (const [name,v] of Object.entries(r.vulnerabilities || {})) console.log(name+" | "+v.severity+" | direct="+v.isDirect+" | fix="+JSON.stringify(v.fixAvailable)); console.log("Totals:",JSON.stringify(r.metadata?.vulnerabilities || {}))'
       - name: Production build
         working-directory: gameforge
         run: npm run build
