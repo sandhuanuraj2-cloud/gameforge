@@ -151,6 +151,43 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
         play: ["Keep range and group mobs before spending area damage.", "Use Fire Bolt for repeatable damage and Flame Blast to add burst.", "Use Pyroblast when you have a safe cast window; do not stand still in avoidable attacks.", "Use Scholar Cowl for energy/defense and Cleric Robe's shield when you are pressured.", "Use food and healing between pulls to keep farming downtime low."],
         warning: "This is a PvE farming setup, not a safe solo-PvP build. Fire Staff has limited mobility and can be punished by dives. A group build or open-world PvP build needs different gear and skills."
       }
+      ,
+      {
+        name: "1H Curse Corrupted Dungeon duelist",
+        activity: "Corrupted Dungeons · solo 1v1",
+        difficulty: "Intermediate · damage over time and defensive timing",
+        gear: ["Main hand: One-Handed Cursed Staff", "Off hand: Shield", "Head: Cultist Cowl", "Chest: Cleric Robe", "Shoes: Scholar Sandals", "Cape: Undead Cape", "Food: Beef Stew", "Potion: Poison Potion"],
+        skills: ["Q: Vile Curse", "W: Desecrate", "E: Death Curse", "Passive: damage or cooldown option suited to your spec"],
+        play: ["Keep curse stacks on the opponent while avoiding unnecessary trades.", "Use Desecrate to pressure or interrupt movement when the opponent commits.", "Save Cleric Robe's defensive window for the enemy burst rather than activating it early.", "Apply Death Curse when the opponent is committed and cannot easily reset.", "Use the dungeon layout and mobs to avoid being forced into a bad melee trade."],
+        warning: "Corrupted Dungeon builds depend heavily on matchup and skill choice. This is a reference setup; check current weapon abilities and the dungeon's item-power rules before entering."
+      },
+      {
+        name: "2v2 Hellgate duo: Dagger Pair + Holy healer",
+        activity: "2v2 Hellgates · coordinated lethal or non-lethal duo",
+        difficulty: "Advanced · requires voice or clear timing",
+        gear: ["DPS: Dagger Pair, Fiend Cowl, Hellion Jacket, Stalker Shoes, Undead Cape", "Healer: One-Handed Holy Staff + Tome of Spells, Cleric Cowl, Cleric Robe, Royal Shoes, Lymhurst Cape", "DPS food: Beef Stew; healer food: Omelette", "Potions: Poison for DPS; defensive or energy potion for healer"],
+        skills: ["DPS: choose a burst Q/W setup; reserve E for a confirmed engage", "Healer: use Holy healing abilities with a defensive option for the enemy's burst", "Both players: agree who calls the engage and who tracks enemy interrupts"],
+        play: ["Do not engage until the healer is in position and both players have key cooldowns.", "DPS pressures one target and commits burst after the healer or enemy defensive cooldown is forced.", "Healer stays at safe range, watches interrupts and saves major healing for the enemy's damage window.", "If the enemy uses major defensives, kite and reset instead of wasting the full combo.", "Use the Hellgate shrinking ring to control space and avoid being split."],
+        warning: "This is a role template, not a guaranteed top-tier composition. Hellgate balance, IP caps and team matchups matter; practise in non-lethal before risking a lethal set."
+      },
+      {
+        name: "Carving Sword small-group PvP",
+        activity: "Small-scale open-world fights · Roads roaming · 3–7 player groups",
+        difficulty: "Advanced · engage timing and target selection",
+        gear: ["Main hand: Carving Sword", "Off hand: Mistcaller", "Head: Stalker Hood", "Chest: Hellion Jacket", "Shoes: Royal Sandals", "Cape: Thetford Cape", "Food: Beef Stew", "Potion: Resistance Potion"],
+        skills: ["Q: Heroic Strike", "W: Interrupt or mobility option for the matchup", "E: Splitting Slash", "Passive: damage option"],
+        play: ["Build Heroic Charges before the group's engage where possible.", "Wait for your tank or caller to create a clump; do not dive alone.", "Use E to pressure clustered targets and help your team reach the backline.", "Activate Hellion Jacket when surrounded by enemies and able to sustain from multiple hits.", "Keep enough mobility to leave after the first engage if your team does not secure a knockdown."],
+        warning: "Carving Sword is a bruiser/armor-reduction role, not the main ZvZ engage tank. Coordinate with your shotcaller and adapt W and boots to enemy crowd control."
+      },
+      {
+        name: "Damnation Staff ZvZ backline support",
+        activity: "Large-scale ZvZ · guild battles · coordinated clump pressure",
+        difficulty: "Advanced · follow shotcaller timing",
+        gear: ["Main hand: Damnation Staff", "Head: Royal Hood", "Chest: Feyscale Robe", "Shoes: Scholar Sandals", "Cape: Caerleon Cape", "Food: Beef Stew", "Potion: Invisibility Potion"],
+        skills: ["Use the staff's armour-reduction area ability on the called clump", "Head: Royal Hood damage amplification when the shotcaller calls the bomb", "Chest: Feyscale Robe for the assigned damage/utility window", "Shoes: Scholar Sandals for energy and repositioning"],
+        play: ["Stay behind the frontline and keep a safe distance from enemy engage tanks.", "Wait for the shotcaller's target marker or voice call; do not cast early.", "Drop the staff ability on the clump together with the team's damage cooldowns.", "Reposition immediately after casting and avoid standing in enemy counter-engage.", "Use invisibility to disengage or reset when the fight is lost, not to chase kills."],
+        warning: "ZvZ gear is role- and guild-specific. Confirm the guild's exact composition, skill bar and caller instructions before buying; do not substitute this backline setup for a tank or healer role."
+      }
     ],
     phases: [
       { phase: "Before leaving town", priorities: ["Check the activity and zone rules; yellow-zone knockdowns and lethal-zone full loot are not the same risk.", "Buy a replacement set and consumables before taking expensive gear out.", "Repair, set skills and confirm your mount and escape plan."] },
