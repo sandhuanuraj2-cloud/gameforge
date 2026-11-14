@@ -22,6 +22,7 @@ const games = [
   { name: "Clash Royale", slug: "clash-royale", genre: "Strategy", platform: "Mobile", description: "Deck guides, matchup plans, elixir management and card tips.", mark: "CLASH", art: "linear-gradient(135deg,#174b76,#5b3b91)" },
   { name: "Minecraft", slug: "minecraft", genre: "Survival", platform: "PC · Console · Mobile", description: "Building, farms, redstone, survival progression and exploration.", mark: "MINECRAFT", art: "linear-gradient(135deg,#285b37,#253f69)" },
   { name: "Genshin Impact", slug: "genshin-impact", genre: "RPG", platform: "PC · Console · Mobile", description: "Character builds, team synergies, artifacts and exploration.", mark: "GENSHIN", art: "linear-gradient(135deg,#315f85,#553b82)" },
+  { name: "Albion Online", slug: "albion-online", genre: "MMORPG", platform: "PC · Mobile", description: "Solo PvP builds, full-loot survival, fame farming and weapon guides.", mark: "ALBION", art: "linear-gradient(135deg,#5b4325,#1c3340)" },
 ];
 
 const guides = [
