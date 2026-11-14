@@ -221,44 +221,7 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     tips: ["Test rotations against real enemies, not only character-screen stats.", "Prioritize a coherent team over several unrelated high-rarity characters.", "Use defensive support when it prevents interrupted damage rotations."],
     mistakes: ["Farming perfect artifacts before upgrading core talents and weapons.", "Ignoring energy recharge and losing burst uptime.", "Building teams without considering elemental application and enemy resistance."]
   }  ,
-  "valorant": {
-    name: "Valorant", genre: "FPS",
-    intro: "An agent, economy and map-control playbook focused on repeatable team rounds rather than aim alone.",
-    objective: "Take space with coordinated utility, convert information into safe decisions, and preserve enough players and resources to win the plant or retake.",
-    plan: ["Pick a compact agent pool and learn one role deeply.", "Before each round, agree on the first area to contest, utility order and who trades entry.", "On attack, clear dangerous angles in layers instead of dry-peeking choke points.", "On defense, vary setups and rotate only when information justifies it."],
-    rolePriorities: [
-      { role: "Duelist", focus: "Create first contact and space with utility while a teammate is ready to trade.", avoid: "Dry entering alone or confusing first blood with a successful site take." },
-      { role: "Initiator", focus: "Gather information and clear contested angles before commitment.", avoid: "Using every ability before teammates are ready." },
-      { role: "Controller", focus: "Isolate sightlines with timed smokes and communicate when they expire.", avoid: "Smoking too early or blocking your team's entry." },
-      { role: "Sentinel", focus: "Secure flanks, delay pushes and preserve utility for the likely hit.", avoid: "Over-rotating and leaving a free route behind the team." }
-    ],
-    phases: [
-      { phase: "Buy phase", priorities: ["Check team credits and coordinate a full buy, force or save.", "Agree on site plan, spike carrier and utility order.", "Buy for the team round, not only personal preference."] },
-      { phase: "Mid-round", priorities: ["Use information to decide whether to commit or rotate.", "Trade teammates and avoid isolated duels.", "Track enemy ultimates and utility already spent."] },
-      { phase: "Post-plant / retake", priorities: ["Play crossfires and use utility to delay the defuse.", "Do not peek one by one when you can hold together.", "Clear angles methodically and coordinate the defuse."] }
-    ],
-    tips: ["Review deaths by asking what information or utility was missing.", "Keep crosshair at expected head height and pre-aim common angles.", "Communicate location, damage and utility in short factual calls.", "Use aim practice for mechanics and match review for decision-making."],
-    mistakes: ["Solo-peeking after a teammate has died.", "Using smokes before the team is ready to take space.", "Buying individually without checking team economy.", "Repeating the same site hit after defenders adapt."]
-  },
-  "minecraft": {
-    name: "Minecraft", genre: "Sandbox Survival",
-    intro: "Survival progression, practical base designs, farms and redstone projects for solo worlds and multiplayer servers.",
-    objective: "Turn early resources into a safe renewable base, then automate repetitive tasks that slow exploration and building.",
-    plan: ["Secure food, a bed, basic tools and a protected shelter before exploring far from spawn.", "Establish storage and smelting areas; label chests by resource.", "Progress through iron, diamonds and enchantments before high-risk Nether or End trips.", "Build farms only after checking edition, version and simulation-distance requirements."],
-    rolePriorities: [
-      { role: "Survival explorer", focus: "Carry food, blocks, water and a safe route home; mark portals and coordinates.", avoid: "Taking every valuable item on an unprepared expedition." },
-      { role: "Builder", focus: "Plan scale, palette, lighting and access before decorative detail.", avoid: "Building without enough materials or leaving dark spawnable spaces." },
-      { role: "Redstone engineer", focus: "Prototype one module, test timing and keep a manual bypass.", avoid: "Copying Java circuitry directly into Bedrock without checking parity." },
-      { role: "Server teammate", focus: "Share coordinates, divide resource tasks and protect communal storage.", avoid: "Building lag-heavy farms or traps without agreement." }
-    ],
-    phases: [
-      { phase: "First day", priorities: ["Collect wood, stone, food and wool; craft a bed and shield where available.", "Light and secure a compact shelter before night.", "Mark spawn and base coordinates; avoid carrying all valuables."] },
-      { phase: "Early progression", priorities: ["Mine safely for iron, build a reliable food source and prepare a Nether kit.", "Use water, blocks and a shield to reduce fall and mob risk.", "Store spare gear before exploring caves or structures."] },
-      { phase: "Automation and endgame", priorities: ["Build farms suited to your edition and simulation distance.", "Create a safe Nether route and prepare potions before boss fights.", "Back up important worlds and test complex redstone away from the main base."] }
-    ],
-    tips: ["Keep a backup before major world edits or experimental redstone.", "Use coordinates and labeled storage to reduce wasted travel.", "Carry water and blocks when exploring dangerous terrain.", "Build farms for your edition and simulation distance, not a random tutorial version."],
-    mistakes: ["Exploring with all valuable items and no marked route home.", "Building large farms before testing mechanics.", "Ignoring lighting around the base.", "Assuming Java and Bedrock redstone or mob rules are identical."]
-  }
+
 };
 
 export default async function GameGuidePage({ params }: { params: Promise<{ slug: string }> }) {
