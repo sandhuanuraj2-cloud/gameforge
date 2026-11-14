@@ -1,5 +1,6 @@
 "use client";
-import {FormEvent,useEffect,useMemo,useState} from "react";
+import {FormEvent,useCallback,useEffect,useMemo,useState} from "react";
+import type { Session } from "@supabase/supabase-js";
 import Link from "next/link";
 import {Hash,Lock,Plus,Send,LogOut,Users,Copy,MessageSquare} from "lucide-react";
 import {getSupabase} from "@/lib/supabase";
@@ -7,18 +8,19 @@ type Channel={id:string;name:string;is_private:boolean;invite_code:string;create
 type Message={id:string;channel_id:string;user_id:string;content:string;created_at:string};
 export default function CommunityPage(){
  const supabase=useMemo(()=>getSupabase(),[]);
- const [session,setSession]=useState<any>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[displayName,setDisplayName]=useState("");
+ const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[displayName,setDisplayName]=useState("");
  const [authMode,setAuthMode]=useState<"signin"|"signup">("signup"),[channels,setChannels]=useState<Channel[]>([]),[active,setActive]=useState<Channel|null>(null),[messages,setMessages]=useState<Message[]>([]);
  const [message,setMessage]=useState(""),[channelName,setChannelName]=useState(""),[privateChannel,setPrivateChannel]=useState(false),[inviteCode,setInviteCode]=useState(""),[busy,setBusy]=useState(false),[notice,setNotice]=useState("");
  const configured=Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>subscription.unsubscribe()},[supabase]);
- async function loadChannels(){if(!supabase||!session)return;const {data,error}=await supabase.from("channels").select("id,name,is_private,invite_code,created_by").order("created_at",{ascending:false});if(error)setNotice(error.message);else{const list=(data||[]) as Channel[];setChannels(list);setActive(old=>old&&list.some(c=>c.id===old.id)?old:(list[0]||null));}}
- useEffect(()=>{loadChannels()},[session]);
- useEffect(()=>{if(!supabase||!session||!active){setMessages([]);return}let alive=true;
-  supabase.from("messages").select("*").eq("channel_id",active.id).order("created_at",{ascending:true}).limit(100).then(({data,error})=>{if(alive){if(error)setNotice(error.message);else setMessages((data||[]) as Message[])}});
-  const sub=supabase.channel("chat-"+active.id).on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"channel_id=eq."+active.id},payload=>setMessages(old=>old.some(m=>m.id===(payload.new as Message).id)?old:[...old,payload.new as Message])).subscribe();
+ const loadChannels=useCallback(async()=>{if(!supabase||!session)return;const {data,error}=await supabase.from("channels").select("id,name,is_private,invite_code,created_by").order("created_at",{ascending:false});if(error)setNotice(error.message);else{const list=(data||[]) as Channel[];setChannels(list);setActive(old=>old&&list.some(c=>c.id===old.id)?old:(list[0]||null));}},[supabase,session]);
+ useEffect(()=>{void loadChannels()},[loadChannels]);
+ const activeChannelId=active?.id;
+ useEffect(()=>{if(!supabase||!session||!activeChannelId){setMessages([]);return}let alive=true;
+  supabase.from("messages").select("*").eq("channel_id",activeChannelId).order("created_at",{ascending:true}).limit(100).then(({data,error})=>{if(alive){if(error)setNotice(error.message);else setMessages((data||[]) as Message[])}});
+  const sub=supabase.channel("chat-"+activeChannelId).on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"channel_id=eq."+activeChannelId},payload=>setMessages(old=>old.some(m=>m.id===(payload.new as Message).id)?old:[...old,payload.new as Message])).subscribe();
   return()=>{alive=false;supabase.removeChannel(sub)}
- },[supabase,session,active?.id]);
+ },[supabase,session,activeChannelId]);
  async function authenticate(e:FormEvent){e.preventDefault();if(!supabase)return;setBusy(true);setNotice("");
   const result=authMode==="signup"?await supabase.auth.signUp({email,password,options:{data:{display_name:displayName||email.split("@")[0]}}}):await supabase.auth.signInWithPassword({email,password});
   if(result.error)setNotice(result.error.message);else if(authMode==="signup"&&!result.data.session)setNotice("Check your email to confirm your account, then sign in.");setBusy(false)}
