@@ -39,7 +39,9 @@ These are the external image assets currently used by the strategy library. The 
 |---|---|---|---|
 | mobile-legends | Cyclops hero splash artwork | [image](https://oneesports.blob.core.windows.net/cdn-data/sites/2/2021/04/Cyclops-2.jpg) | [source](https://www.oneesports.gg/mobile-legends/cyclops-jungler-nma-season-3/) |
 | pubg-battlegrounds | PUBG M416 assault rifle render | [image](https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-m416.png) | [source](https://pubg.com/en/game-info/weapons) |
+| valorant | Valorant agent character lineup | [image](https://cdn.mos.cms.futurecdn.net/6bXqNkceszqHxfYck3S3Rn.jpg) | [source](https://www.pcgamer.com/valorant-how-riot-launched-a-successful-esport-in-a-global-pandemic/) |
 | clash-royale | Clash Royale deck card artwork | [image](https://img.redbull.com/images/q_auto%2Cf_auto/redbullcom/2018/08/08/ee0d71b3-e544-4dd2-bbce-4bfff1857b4e/clash-royale) | [source](https://www.redbull.com/be-nl/clash-royale-decks-arena-4-5-6) |
+| minecraft | Minecraft starter cabins and Nether portal build | [image](https://blockical.com/wp-content/uploads/2025/12/duo-starter-png.png) | [source](https://blockical.com/all-builds/) |
 | genshin-impact | Genshin Impact Hyperbloom team characters | [image](https://staticg.sportskeeda.com/editor/2024/11/57ce9-17304552501326-1920.jpg) | [source](https://www.sportskeeda.com/esports/best-nahida-hyperbloom-team-comps-stats-rotations-gameplay-guide) |
 | albion-online | Albion Online tier VIII weapon and armour icons | [image](https://www.gamersdecide.com/sites/default/files/styles/responsive_image_512xauto/public/authors/u161773/dreaded_bloodletter.jpg?itok=miBCjKSZ) | [source](https://www.gamersdecide.com/articles/albion-online-best-class-builds) |
 
