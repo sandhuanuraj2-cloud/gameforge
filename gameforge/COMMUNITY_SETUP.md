@@ -12,7 +12,7 @@ The SQL creates channels, private-channel membership, messages, row-level securi
 
 ## 2. Add environment variables to Vercel Preview
 
-In the Vercel project connected to this repository, open **Settings → Environment Variables**. Add these for **Preview**, preferably scoped to branch `gameforge/mvp-guides`:
+Use the designated Vercel project **`gameforge-hqo3`**. Open **Settings → Environment Variables** and add these for **Preview**, scoped to branch `gameforge/mvp-guides`. Preview deployments on the other duplicate GAMEFORGE projects are disabled to prevent duplicate builds.
 
 | Variable | Value |
 |---|---|
@@ -23,7 +23,7 @@ Do not add a Supabase service-role or secret key to a `NEXT_PUBLIC_*` variable o
 
 ## 3. Test on a Preview URL
 
-After saving the variables, trigger a Preview build for `gameforge/mvp-guides` (not Production). Test:
+After saving the variables and when the Vercel build quota is available, trigger a Preview build for `gameforge/mvp-guides` (not Production). Do not use an old preview URL; confirm the deployment commit matches the latest development-branch commit. Test:
 
 1. Create an account with email and password.
 2. Confirm the email if Supabase email confirmation is enabled.
