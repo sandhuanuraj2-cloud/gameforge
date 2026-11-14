@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, Gamepad2, ChevronRight, Users, BookOpen, ShieldCheck, Swords, Menu, X } from "lucide-react";
+import { Search, Gamepad2, ChevronRight, Users, BookOpen, ShieldCheck, Menu, X } from "lucide-react";
 
 const categories = [
   { name: "MOBA", icon: "⚔️", count: "Team tactics & builds" },
