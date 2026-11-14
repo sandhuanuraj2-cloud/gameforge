@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Target, Lightbulb, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
 import { strategyExpansions } from "@/lib/strategy-expansion";
+import StrategyLibrary from "@/components/StrategyLibrary";
 
 const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[]; lanePlans?: { role: string; early: string; mid: string; late: string; emblem: string; spell: string; build: string; }[]; matchups?: { lane: string; pick: string; why: string; warning: string; }[]; phases?: { phase: string; priorities: string[] }[]; builds?: { name: string; activity: string; difficulty: string; gear: string[]; skills: string[]; play: string[]; warning: string }[]; customStrategies?: { name: string; scenario: string; setup: string; execution: string[]; winCondition: string; adaptation: string }[] }> = {
   "mobile-legends": {
@@ -342,38 +343,7 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
                 </section>)}
               </div>
             </div>}
-            {guide.builds && <div className="mt-10">
-              <div className="section-kicker">Builds, decks & loadouts</div>
-              <h2 className="mt-2 text-2xl font-black">Choose a setup that fits your plan</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-400">These are adaptable templates, not fixed rules. Check the current patch, game edition and your available roster before copying a setup.</p>
-              <div className="mt-4 space-y-4">
-                {guide.builds.map((build) => <section key={build.name} className="rounded-2xl border border-purple-900/60 bg-black/20 p-4 sm:p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-lg font-extrabold text-purple-200">{build.name}</h3><span className="rounded-full border border-blue-900/60 px-3 py-1 text-xs text-blue-200">{build.difficulty}</span></div>
-                  <p className="mt-1 text-xs font-bold uppercase tracking-wider text-slate-500">{build.activity}</p>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Core setup</p><ul className="mt-2 space-y-1">{build.gear.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
-                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Key mechanics</p><ul className="mt-2 space-y-1">{build.skills.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
-                  </div>
-                  <div className="mt-4 border-t border-white/10 pt-4"><p className="text-xs font-bold uppercase tracking-wider text-purple-300">How to play</p><ol className="mt-2 list-decimal space-y-1 pl-5">{build.play.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ol></div>
-                  <p className="mt-4 rounded-lg border border-amber-900/40 bg-amber-950/10 p-3 text-xs leading-5 text-amber-100/80"><strong>Limit:</strong> {build.warning}</p>
-                </section>)}
-              </div>
-            </div>}
-            {guide.customStrategies && <div className="mt-10">
-              <div className="section-kicker">GAMEFORGE custom tactics</div>
-              <h2 className="mt-2 text-2xl font-black">Strategies for specific situations</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-400">Original playbooks built around a clear scenario, setup, execution and fallback. Adapt them to your patch, map and team.</p>
-              <div className="mt-4 grid gap-4">
-                {guide.customStrategies.map((strategy) => <section key={strategy.name} className="rounded-2xl border border-blue-900/50 bg-blue-950/10 p-4 sm:p-5">
-                  <h3 className="text-lg font-extrabold text-blue-200">{strategy.name}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-300"><strong className="text-slate-100">Use when:</strong> {strategy.scenario}</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-300"><strong className="text-slate-100">Setup:</strong> {strategy.setup}</p>
-                  <ol className="mt-3 list-decimal space-y-2 pl-5">{strategy.execution.map((step) => <li key={step} className="text-sm leading-6 text-slate-300">{step}</li>)}</ol>
-                  <p className="mt-3 text-sm leading-6 text-emerald-200/90"><strong>Win condition:</strong> {strategy.winCondition}</p>
-                  <p className="mt-2 text-xs leading-5 text-slate-400"><strong className="text-slate-300">If it fails:</strong> {strategy.adaptation}</p>
-                </section>)}
-              </div>
-            </div>}
+            {(guide.builds || guide.customStrategies) && <StrategyLibrary game={slug} builds={guide.builds || []} strategies={guide.customStrategies || []}/>}
             {guide.buildRules && <div className="mt-8">
               <div className="section-kicker">Adaptive build checklist</div>
               <ul className="mt-4 space-y-3">{guide.buildRules.map((rule) => <li key={rule} className="flex gap-2 text-sm leading-6 text-slate-300"><CheckCircle2 className="mt-1 shrink-0 text-blue-300" size={16}/>{rule}</li>)}</ul>
