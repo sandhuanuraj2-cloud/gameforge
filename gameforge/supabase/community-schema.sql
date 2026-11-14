@@ -23,6 +23,9 @@ create table if not exists public.messages(
  created_at timestamptz not null default now()
 );
 create index if not exists messages_channel_created_idx on public.messages(channel_id,created_at);
+create index if not exists channel_members_user_id_idx on public.channel_members(user_id);
+create index if not exists channels_created_by_idx on public.channels(created_by);
+create index if not exists messages_user_id_idx on public.messages(user_id);
 
 -- Keep the RLS helper outside the exposed Data API schema. It derives the caller
 -- from auth.uid() so callers cannot probe access for another user.
@@ -53,18 +56,18 @@ create policy "Read visible channels" on public.channels for select to authentic
 using(private.can_access_channel(id));
 drop policy if exists "Authenticated users can create channels" on public.channels;
 drop policy if exists "Create own channels" on public.channels;
-create policy "Create own channels" on public.channels for insert to authenticated with check(created_by=auth.uid());
+create policy "Create own channels" on public.channels for insert to authenticated with check(created_by=(select auth.uid()));
 drop policy if exists "Owners can update channels" on public.channels;
 drop policy if exists "Owners update channels" on public.channels;
-create policy "Owners update channels" on public.channels for update to authenticated using(created_by=auth.uid()) with check(created_by=auth.uid());
+create policy "Owners update channels" on public.channels for update to authenticated using(created_by=(select auth.uid())) with check(created_by=(select auth.uid()));
 
 drop policy if exists "Users can view memberships in visible channels" on public.channel_members;
 drop policy if exists "Read memberships" on public.channel_members;
-create policy "Read own memberships" on public.channel_members for select to authenticated using(user_id=auth.uid());
+create policy "Read own memberships" on public.channel_members for select to authenticated using(user_id=(select auth.uid()));
 drop policy if exists "Users can join channels" on public.channel_members;
 drop policy if exists "Join public or own channels" on public.channel_members;
 create policy "Join accessible channels" on public.channel_members for insert to authenticated
-with check(user_id=auth.uid() and private.can_access_channel(channel_id));
+with check(user_id=(select auth.uid()) and private.can_access_channel(channel_id));
 
 drop policy if exists "Members can read messages" on public.messages;
 drop policy if exists "Read allowed messages" on public.messages;
@@ -73,7 +76,7 @@ using(private.can_access_channel(channel_id));
 drop policy if exists "Members can send messages" on public.messages;
 drop policy if exists "Send allowed messages" on public.messages;
 create policy "Send allowed messages" on public.messages for insert to authenticated
-with check(user_id=auth.uid() and private.can_access_channel(channel_id));
+with check(user_id=(select auth.uid()) and private.can_access_channel(channel_id));
 
 create or replace function public.join_channel_by_invite(invite text)
 returns uuid language plpgsql security definer set search_path='' as $$
