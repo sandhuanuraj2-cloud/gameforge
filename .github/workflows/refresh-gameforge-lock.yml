@@ -1,0 +1,36 @@
+name: Refresh package lock
+on:
+  push:
+    branches:
+      - gameforge/mvp-guides
+    paths:
+      - gameforge/package.json
+      - .github/workflows/refresh-gameforge-lock.yml
+permissions:
+  contents: write
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gameforge/mvp-guides
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gameforge/package-lock.json
+      - name: Regenerate lockfile
+        working-directory: gameforge
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Commit lockfile if changed
+        run: |
+          if git diff --quiet -- gameforge/package-lock.json; then
+            echo "Lockfile already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gameforge/package-lock.json
+          git commit -m "Refresh GAMEFORGE package lock"
+          git push
