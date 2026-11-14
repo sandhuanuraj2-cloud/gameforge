@@ -7,20 +7,20 @@ type Build = { name: string; activity: string; difficulty: string; gear: string[
 type Strategy = { name: string; scenario: string; setup: string; execution: string[]; winCondition: string; adaptation: string };
 type Props = { game: string; builds: Build[]; strategies: Strategy[] };
 
-const visualByGame: Record<string, { emoji: string; label: string; accent: string }> = {
-  "mobile-legends": { emoji: "⚔️", label: "Hero loadout", accent: "from-fuchsia-950 to-indigo-950" },
-  "pubg-battlegrounds": { emoji: "🎯", label: "Weapons & gear", accent: "from-amber-950 to-stone-950" },
-  valorant: { emoji: "🔫", label: "Agent equipment", accent: "from-rose-950 to-slate-950" },
-  "clash-royale": { emoji: "🛡️", label: "Deck cards", accent: "from-orange-950 to-purple-950" },
-  minecraft: { emoji: "⛏️", label: "Tools & resources", accent: "from-emerald-950 to-stone-950" },
-  "genshin-impact": { emoji: "✨", label: "Character & weapon", accent: "from-cyan-950 to-violet-950" },
-  "albion-online": { emoji: "🪓", label: "Weapons & armour", accent: "from-yellow-950 to-stone-950" },
+const visualByGame: Record<string, { emoji: string; label: string; accent: string; image: string; alt: string }> = {
+  "mobile-legends": { emoji: "⚔️", label: "Hero loadout", accent: "from-fuchsia-950 to-indigo-950", image: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2021/10/13/mlbb.jpg", alt: "Mobile Legends hero artwork" },
+  "pubg-battlegrounds": { emoji: "🎯", label: "Weapons & gear", accent: "from-amber-950 to-stone-950", image: "https://wstatic-prod.pubg.com/web/live/static/game-info/weapons/images/viewer/img-weapons-m416.png", alt: "PUBG M416 assault rifle render" },
+  valorant: { emoji: "🔫", label: "Agent equipment", accent: "from-rose-950 to-slate-950", image: "https://cdn.mos.cms.futurecdn.net/6bXqNkceszqHxfYck3S3Rn.jpg", alt: "Valorant agent character artwork" },
+  "clash-royale": { emoji: "🛡️", label: "Deck cards", accent: "from-orange-950 to-purple-950", image: "https://clashroyale.inbox.supercell.com/9jtsgmsiuthj/k_YHCzHVW18wcI4601sk91QptsRVXjrx2xAJlj8qJ14/f8a6330427caa1cd370040a0b58ad3dc/24741016_1648052731.png", alt: "Clash Royale Archers card artwork" },
+  minecraft: { emoji: "⛏️", label: "Tools & resources", accent: "from-emerald-950 to-stone-950", image: "https://images.gutefrage.net/media/fragen/bilder/was-findet-ihr-besser-587/0_full.jpg?v=1692317210000", alt: "Minecraft diamond armour and tools" },
+  "genshin-impact": { emoji: "✨", label: "Character & weapon", accent: "from-cyan-950 to-violet-950", image: "https://assets.st-note.com/img/1691390903749-HvOerzUX22.png?width=1200", alt: "Genshin Impact forgeable weapon lineup" },
+  "albion-online": { emoji: "🪓", label: "Weapons & armour", accent: "from-yellow-950 to-stone-950", image: "https://bendermoney.com/storage/filemanager/file/2/1fmUEUG9lMDqacCKaylIeTNQZEMgZpTg3r6lkw8L.png", alt: "Albion Online armour equipment icons" },
 };
 
 export default function StrategyLibrary({ game, builds, strategies }: Props) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<"all" | "build" | "strategy">("all");
-  const visual = visualByGame[game] || { emoji: "🎮", label: "Game setup", accent: "from-purple-950 to-slate-950" };
+  const visual = visualByGame[game] || { emoji: "🎮", label: "Game setup", accent: "from-purple-950 to-slate-950", image: "", alt: "Game setup artwork" };
   const items = useMemo(() => [
     ...builds.map((item) => ({ ...item, type: "build" as const, searchable: [item.name, item.activity, item.difficulty, ...item.gear, ...item.skills, ...item.play].join(" ") })),
     ...strategies.map((item) => ({ ...item, type: "strategy" as const, searchable: [item.name, item.scenario, item.setup, ...item.execution, item.winCondition, item.adaptation].join(" ") })),
@@ -43,7 +43,7 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
       <div className="mt-3 grid gap-4">
         {items.map((item) => <article key={item.type + item.name} className="overflow-hidden rounded-2xl border border-purple-900/50 bg-black/25">
           <div className={`relative flex min-h-32 items-center gap-4 overflow-hidden bg-gradient-to-br ${visual.accent} p-4 sm:min-h-36 sm:px-6`}>
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-black/25 text-4xl shadow-xl sm:h-24 sm:w-24 sm:text-5xl" aria-hidden="true">{visual.emoji}</div>
+            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28">{visual.image ? <img src={visual.image} alt={visual.alt} loading="lazy" className="h-full w-full object-cover" onError={(event) => { event.currentTarget.style.display = "none"; }}/> : null}<span className="absolute text-4xl drop-shadow-lg" aria-hidden="true">{visual.emoji}</span></div>
             <div className="relative z-10 min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-200/80">{visual.label} · {item.type === "build" ? "Build" : "Custom tactic"}</p>
               <h3 className="mt-2 text-lg font-extrabold text-white sm:text-xl">{item.name}</h3>
