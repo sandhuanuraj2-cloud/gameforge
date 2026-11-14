@@ -245,7 +245,8 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
           <p className="hero-copy">{guide.intro}</p>
         </div>
       </section>
-      <section className="section">
+      {(guide.builds || guide.customStrategies) && <section className="section !py-6"><div className="container"><StrategyLibrary game={slug} builds={guide.builds || []} strategies={guide.customStrategies || []}/></div></section>}
+      <section className="section !pt-4">
         <div className="container grid gap-6 lg:grid-cols-[1.5fr_1fr]">
           <article className="game-card p-6 sm:p-8">
             <div className="section-kicker">Your win condition</div>
@@ -306,7 +307,6 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
                 </section>)}
               </div>
             </div>}
-            {(guide.builds || guide.customStrategies) && <StrategyLibrary game={slug} builds={guide.builds || []} strategies={guide.customStrategies || []}/>}
             {guide.buildRules && <div className="mt-8">
               <div className="section-kicker">Adaptive build checklist</div>
               <ul className="mt-4 space-y-3">{guide.buildRules.map((rule) => <li key={rule} className="flex gap-2 text-sm leading-6 text-slate-300"><CheckCircle2 className="mt-1 shrink-0 text-blue-300" size={16}/>{rule}</li>)}</ul>
