@@ -144,13 +144,14 @@ export default function Home() {
           <div className="community flex flex-col items-start justify-between gap-7 md:flex-row md:items-center">
             <div className="max-w-2xl">
               <div className="section-kicker">Built by players, for players</div>
-              <h2 className="mt-2 text-3xl font-black tracking-tight">Your strategy could help someone win.</h2>
-              <p className="mt-3 text-sm leading-6 text-slate-400">Share a guide, publish a build or explain a matchup. Community submissions will be reviewed before appearing publicly.</p>
+              <h2 className="mt-2 text-3xl font-black tracking-tight">Find your squad. Share your game plan.</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-400">Join player-created public channels or invite-only rooms to discuss builds, tactics and matchups. Community chat is text-only for now.</p>
+              <a href="/community" className="primary-btn mt-5 inline-flex">Open community</a>
             </div>
             <div className="flex flex-wrap gap-3">
-              <div className="rounded-xl border border-purple-900/70 bg-black/20 p-4"><Users className="mb-2 text-purple-300"/><div className="font-bold">Community</div><div className="text-xs text-slate-500">Player knowledge</div></div>
-              <div className="rounded-xl border border-blue-900/70 bg-black/20 p-4"><ShieldCheck className="mb-2 text-blue-300"/><div className="font-bold">Moderated</div><div className="text-xs text-slate-500">Quality first</div></div>
-              <div className="rounded-xl border border-purple-900/70 bg-black/20 p-4"><BookOpen className="mb-2 text-purple-300"/><div className="font-bold">Guides</div><div className="text-xs text-slate-500">Learn together</div></div>
+              <div className="rounded-xl border border-purple-900/70 bg-black/20 p-4"><Users className="mb-2 text-purple-300"/><div className="font-bold">Player channels</div><div className="text-xs text-slate-500">Create your own room</div></div>
+              <div className="rounded-xl border border-blue-900/70 bg-black/20 p-4"><ShieldCheck className="mb-2 text-blue-300"/><div className="font-bold">Invite-only rooms</div><div className="text-xs text-slate-500">Share a private invite</div></div>
+              <div className="rounded-xl border border-purple-900/70 bg-black/20 p-4"><BookOpen className="mb-2 text-purple-300"/><div className="font-bold">Text chat</div><div className="text-xs text-slate-500">Discuss strategies live</div></div>
             </div>
           </div>
         </div>
