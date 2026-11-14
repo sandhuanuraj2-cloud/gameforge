@@ -343,16 +343,16 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
               </div>
             </div>}
             {guide.builds && <div className="mt-10">
-              <div className="section-kicker">Equipment builds</div>
-              <h2 className="mt-2 text-2xl font-black">Choose your loadout</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-400">Gear is a reference template. Check current market prices and patch changes before buying.</p>
+              <div className="section-kicker">Builds, decks & loadouts</div>
+              <h2 className="mt-2 text-2xl font-black">Choose a setup that fits your plan</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">These are adaptable templates, not fixed rules. Check the current patch, game edition and your available roster before copying a setup.</p>
               <div className="mt-4 space-y-4">
                 {guide.builds.map((build) => <section key={build.name} className="rounded-2xl border border-purple-900/60 bg-black/20 p-4 sm:p-5">
                   <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-lg font-extrabold text-purple-200">{build.name}</h3><span className="rounded-full border border-blue-900/60 px-3 py-1 text-xs text-blue-200">{build.difficulty}</span></div>
                   <p className="mt-1 text-xs font-bold uppercase tracking-wider text-slate-500">{build.activity}</p>
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Equipment</p><ul className="mt-2 space-y-1">{build.gear.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
-                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Skills</p><ul className="mt-2 space-y-1">{build.skills.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
+                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Core setup</p><ul className="mt-2 space-y-1">{build.gear.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
+                    <div><p className="text-xs font-bold uppercase tracking-wider text-blue-300">Key mechanics</p><ul className="mt-2 space-y-1">{build.skills.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ul></div>
                   </div>
                   <div className="mt-4 border-t border-white/10 pt-4"><p className="text-xs font-bold uppercase tracking-wider text-purple-300">How to play</p><ol className="mt-2 list-decimal space-y-1 pl-5">{build.play.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ol></div>
                   <p className="mt-4 rounded-lg border border-amber-900/40 bg-amber-950/10 p-3 text-xs leading-5 text-amber-100/80"><strong>Limit:</strong> {build.warning}</p>
