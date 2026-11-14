@@ -26,6 +26,9 @@ jobs:
       - name: Regenerate package lock
         working-directory: gameforge
         run: npm install --package-lock-only --ignore-scripts
+      - name: Apply compatible security updates
+        working-directory: gameforge
+        run: npm audit fix --package-lock-only --ignore-scripts || echo "Some advisories remain for manual review."
       - name: Commit lockfile before validation
         run: |
           if git diff --quiet -- gameforge/package-lock.json; then
