@@ -1,15 +1,15 @@
-name: Refresh package lock
+name: GAMEFORGE validation
 on:
   push:
     branches:
       - gameforge/mvp-guides
     paths:
-      - gameforge/package.json
+      - gameforge/**
       - .github/workflows/refresh-gameforge-lock.yml
 permissions:
   contents: write
 jobs:
-  lockfile:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +23,15 @@ jobs:
       - name: Regenerate lockfile
         working-directory: gameforge
         run: npm install --package-lock-only --ignore-scripts
+      - name: Install dependencies
+        working-directory: gameforge
+        run: npm ci
+      - name: Production build
+        working-directory: gameforge
+        run: npm run build
+      - name: Lint
+        working-directory: gameforge
+        run: npm run lint
       - name: Commit lockfile if changed
         run: |
           if git diff --quiet -- gameforge/package-lock.json; then
