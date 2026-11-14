@@ -26,6 +26,7 @@ create index if not exists messages_channel_created_idx on public.messages(chann
 
 -- Keep the RLS helper outside the exposed Data API schema. It derives the caller
 -- from auth.uid() so callers cannot probe access for another user.
+drop function if exists public.can_access_channel(uuid,uuid);
 create schema if not exists private;
 revoke all on schema private from public, anon;
 grant usage on schema private to authenticated;
