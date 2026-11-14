@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Target, Lightbulb, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
+import { strategyExpansions } from "@/lib/strategy-expansion";
 
-const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[]; lanePlans?: { role: string; early: string; mid: string; late: string; emblem: string; spell: string; build: string; }[]; matchups?: { lane: string; pick: string; why: string; warning: string; }[]; phases?: { phase: string; priorities: string[] }[]; builds?: { name: string; activity: string; difficulty: string; gear: string[]; skills: string[]; play: string[]; warning: string }[] }> = {
+const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[]; lanePlans?: { role: string; early: string; mid: string; late: string; emblem: string; spell: string; build: string; }[]; matchups?: { lane: string; pick: string; why: string; warning: string; }[]; phases?: { phase: string; priorities: string[] }[]; builds?: { name: string; activity: string; difficulty: string; gear: string[]; skills: string[]; play: string[]; warning: string }[]; customStrategies?: { name: string; scenario: string; setup: string; execution: string[]; winCondition: string; adaptation: string }[] }> = {
   "mobile-legends": {
     name: "Mobile Legends: Bang Bang", genre: "MOBA",
     intro: "A role-by-role framework for lane control, rotations, objectives and adapting your build to the enemy draft.",
@@ -218,13 +219,52 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     plan: ["Choose a team around a reaction or damage synergy instead of selecting four characters independently.", "Level the most important talents and weapons for your main damage dealer before spreading resources thinly.", "Use artifacts with useful main stats first; optimize substats after the core build works.", "Check energy recharge needs and adjust rotations so key bursts are ready when needed."],
     tips: ["Test rotations against real enemies, not only character-screen stats.", "Prioritize a coherent team over several unrelated high-rarity characters.", "Use defensive support when it prevents interrupted damage rotations."],
     mistakes: ["Farming perfect artifacts before upgrading core talents and weapons.", "Ignoring energy recharge and losing burst uptime.", "Building teams without considering elemental application and enemy resistance."]
+  }  ,
+  "valorant": {
+    name: "Valorant", genre: "FPS",
+    intro: "An agent, economy and map-control playbook focused on repeatable team rounds rather than aim alone.",
+    objective: "Take space with coordinated utility, convert information into safe decisions, and preserve enough players and resources to win the plant or retake.",
+    plan: ["Pick a compact agent pool and learn one role deeply.", "Before each round, agree on the first area to contest, utility order and who trades entry.", "On attack, clear dangerous angles in layers instead of dry-peeking choke points.", "On defense, vary setups and rotate only when information justifies it."],
+    rolePriorities: [
+      { role: "Duelist", focus: "Create first contact and space with utility while a teammate is ready to trade.", avoid: "Dry entering alone or confusing first blood with a successful site take." },
+      { role: "Initiator", focus: "Gather information and clear contested angles before commitment.", avoid: "Using every ability before teammates are ready." },
+      { role: "Controller", focus: "Isolate sightlines with timed smokes and communicate when they expire.", avoid: "Smoking too early or blocking your team's entry." },
+      { role: "Sentinel", focus: "Secure flanks, delay pushes and preserve utility for the likely hit.", avoid: "Over-rotating and leaving a free route behind the team." }
+    ],
+    phases: [
+      { phase: "Buy phase", priorities: ["Check team credits and coordinate a full buy, force or save.", "Agree on site plan, spike carrier and utility order.", "Buy for the team round, not only personal preference."] },
+      { phase: "Mid-round", priorities: ["Use information to decide whether to commit or rotate.", "Trade teammates and avoid isolated duels.", "Track enemy ultimates and utility already spent."] },
+      { phase: "Post-plant / retake", priorities: ["Play crossfires and use utility to delay the defuse.", "Do not peek one by one when you can hold together.", "Clear angles methodically and coordinate the defuse."] }
+    ],
+    tips: ["Review deaths by asking what information or utility was missing.", "Keep crosshair at expected head height and pre-aim common angles.", "Communicate location, damage and utility in short factual calls.", "Use aim practice for mechanics and match review for decision-making."],
+    mistakes: ["Solo-peeking after a teammate has died.", "Using smokes before the team is ready to take space.", "Buying individually without checking team economy.", "Repeating the same site hit after defenders adapt."]
+  },
+  "minecraft": {
+    name: "Minecraft", genre: "Sandbox Survival",
+    intro: "Survival progression, practical base designs, farms and redstone projects for solo worlds and multiplayer servers.",
+    objective: "Turn early resources into a safe renewable base, then automate repetitive tasks that slow exploration and building.",
+    plan: ["Secure food, a bed, basic tools and a protected shelter before exploring far from spawn.", "Establish storage and smelting areas; label chests by resource.", "Progress through iron, diamonds and enchantments before high-risk Nether or End trips.", "Build farms only after checking edition, version and simulation-distance requirements."],
+    rolePriorities: [
+      { role: "Survival explorer", focus: "Carry food, blocks, water and a safe route home; mark portals and coordinates.", avoid: "Taking every valuable item on an unprepared expedition." },
+      { role: "Builder", focus: "Plan scale, palette, lighting and access before decorative detail.", avoid: "Building without enough materials or leaving dark spawnable spaces." },
+      { role: "Redstone engineer", focus: "Prototype one module, test timing and keep a manual bypass.", avoid: "Copying Java circuitry directly into Bedrock without checking parity." },
+      { role: "Server teammate", focus: "Share coordinates, divide resource tasks and protect communal storage.", avoid: "Building lag-heavy farms or traps without agreement." }
+    ],
+    phases: [
+      { phase: "First day", priorities: ["Collect wood, stone, food and wool; craft a bed and shield where available.", "Light and secure a compact shelter before night.", "Mark spawn and base coordinates; avoid carrying all valuables."] },
+      { phase: "Early progression", priorities: ["Mine safely for iron, build a reliable food source and prepare a Nether kit.", "Use water, blocks and a shield to reduce fall and mob risk.", "Store spare gear before exploring caves or structures."] },
+      { phase: "Automation and endgame", priorities: ["Build farms suited to your edition and simulation distance.", "Create a safe Nether route and prepare potions before boss fights.", "Back up important worlds and test complex redstone away from the main base."] }
+    ],
+    tips: ["Keep a backup before major world edits or experimental redstone.", "Use coordinates and labeled storage to reduce wasted travel.", "Carry water and blocks when exploring dangerous terrain.", "Build farms for your edition and simulation distance, not a random tutorial version."],
+    mistakes: ["Exploring with all valuable items and no marked route home.", "Building large farms before testing mechanics.", "Ignoring lighting around the base.", "Assuming Java and Bedrock redstone or mob rules are identical."]
   }
 };
 
 export default async function GameGuidePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const guide = gameGuides[slug];
-  if (!guide) notFound();
+  const baseGuide = gameGuides[slug];
+  if (!baseGuide) notFound();
+  const guide = { ...baseGuide, ...strategyExpansions[slug] };
 
   return (
     <main className="site-shell min-h-screen">
@@ -316,6 +356,21 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
                   </div>
                   <div className="mt-4 border-t border-white/10 pt-4"><p className="text-xs font-bold uppercase tracking-wider text-purple-300">How to play</p><ol className="mt-2 list-decimal space-y-1 pl-5">{build.play.map((item) => <li key={item} className="text-sm leading-6 text-slate-300">{item}</li>)}</ol></div>
                   <p className="mt-4 rounded-lg border border-amber-900/40 bg-amber-950/10 p-3 text-xs leading-5 text-amber-100/80"><strong>Limit:</strong> {build.warning}</p>
+                </section>)}
+              </div>
+            </div>}
+            {guide.customStrategies && <div className="mt-10">
+              <div className="section-kicker">GAMEFORGE custom tactics</div>
+              <h2 className="mt-2 text-2xl font-black">Strategies for specific situations</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">Original playbooks built around a clear scenario, setup, execution and fallback. Adapt them to your patch, map and team.</p>
+              <div className="mt-4 grid gap-4">
+                {guide.customStrategies.map((strategy) => <section key={strategy.name} className="rounded-2xl border border-blue-900/50 bg-blue-950/10 p-4 sm:p-5">
+                  <h3 className="text-lg font-extrabold text-blue-200">{strategy.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-300"><strong className="text-slate-100">Use when:</strong> {strategy.scenario}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300"><strong className="text-slate-100">Setup:</strong> {strategy.setup}</p>
+                  <ol className="mt-3 list-decimal space-y-2 pl-5">{strategy.execution.map((step) => <li key={step} className="text-sm leading-6 text-slate-300">{step}</li>)}</ol>
+                  <p className="mt-3 text-sm leading-6 text-emerald-200/90"><strong>Win condition:</strong> {strategy.winCondition}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-400"><strong className="text-slate-300">If it fails:</strong> {strategy.adaptation}</p>
                 </section>)}
               </div>
             </div>}
