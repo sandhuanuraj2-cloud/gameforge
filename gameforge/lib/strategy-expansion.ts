@@ -6,7 +6,7 @@ export type CustomStrategy = {
   name: string; scenario: string; setup: string; execution: string[];
   winCondition: string; adaptation: string;
 };
-export const strategyExpansions: Record<string, { builds: GuideBuild[]; customStrategies: CustomStrategy[] }> = {
+export const strategyExpansions: Record<string, { builds?: GuideBuild[]; customStrategies: CustomStrategy[] }> = {
   "mobile-legends": {
     builds: [
       { name: "Durable burst mage — Cyclops mid", activity: "Ranked mid · anti-dive", difficulty: "Intermediate", gear: ["Arcane or defensive boots", "Enchanted Talisman", "Concentrated Energy", "Genius Wand", "Athena's Shield vs burst or Radiant Armor vs repeated magic", "Divine Glaive when enemies build magic defense"], skills: ["Mage emblem with cooldown or penetration focus", "Flicker to reposition; Purify against reliable hard control"], play: ["Clear safely and use Skill 2 to reposition rather than chase.", "Poke through minions when safe; retain mana for gank defense.", "Rotate after clearing and use the ultimate when allies can follow.", "Stay behind frontline and keep moving during late fights."], warning: "This trades some burst for survival. Confirm current item stats and adapt to the enemy draft." },
@@ -74,7 +74,6 @@ export const strategyExpansions: Record<string, { builds: GuideBuild[]; customSt
     ]
   },
   "albion-online": {
-    builds: [],
     customStrategies: [
       { name: "Solo escape before loot", scenario: "A stronger group appears while you are farming in a lethal zone.", setup: "Know your mount route, cooldowns and escape direction before entering the camp.", execution: ["Stop attacking when dismount pressure appears.", "Move toward terrain that breaks line of sight.", "Use defensive or mobility skills after the enemy commits crowd control.", "Remount only when combat status ends and the area is clear."], winCondition: "Preserve your gear and loot; survival beats gambling a full set for low value.", adaptation: "If escape is blocked, use terrain to create one exit window instead of spending every cooldown at once." },
       { name: "Cooldown bait for solo PvP", scenario: "Your 1v1 build loses to an opponent's burst combo.", setup: "Identify their main engage skill and reserve your defensive answer.", execution: ["Open with low-commitment pressure.", "Disengage briefly after they commit their major cooldown.", "Re-enter during their downtime and use your execute or mobility skill.", "Stop chasing if a second enemy appears."], winCondition: "Win through cooldown advantage and controlled re-engagement.", adaptation: "Against patient opponents, pressure their resources and objective control rather than forcing an opening." }
