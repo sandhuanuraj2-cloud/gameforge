@@ -53,7 +53,7 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
   const [kind, setKind] = useState<"all" | "build" | "strategy">("all");
   const visual = visualByGame[game] || { emoji: "🎮", label: "Game setup", accent: "from-purple-950 to-slate-950", artwork: { image: "", alt: "Game setup artwork", source: "" } };
   const items = useMemo(() => [
-    ...builds.map((item) => ({ ...item, type: "build" as const, searchable: [item.name, item.activity, item.difficulty, ...item.gear, ...item.skills, ...item.play].join(" ") })),
+    ...builds.map((item) => ({ ...item, type: "build" as const, searchable: [item.name, item.activity, item.difficulty, ...item.gear, ...item.skills, ...item.play, buildArtwork[item.name]?.alt || ""].join(" ") })),
     ...strategies.map((item) => ({ ...item, type: "strategy" as const, searchable: [item.name, item.scenario, item.setup, ...item.execution, item.winCondition, item.adaptation].join(" ") })),
   ].filter((item) => (kind === "all" || item.type === kind) && (!query.trim() || item.searchable.toLowerCase().includes(query.trim().toLowerCase()))), [builds, strategies, query, kind]);
 
