@@ -99,9 +99,12 @@ grant select, insert, update on public.channels to authenticated;
 grant select, insert on public.channel_members to authenticated;
 grant select, insert on public.messages to authenticated;
 
-do $$
+do $
 begin
  if not exists(select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='messages') then
   alter publication supabase_realtime add table public.messages;
  end if;
-end $$;
+ if not exists(select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='channels') then
+  alter publication supabase_realtime add table public.channels;
+ end if;
+end $;
