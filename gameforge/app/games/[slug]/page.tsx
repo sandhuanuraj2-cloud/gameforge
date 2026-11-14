@@ -42,6 +42,19 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     name: "PUBG: Battlegrounds", genre: "Battle Royale",
     intro: "A survival-first framework for smarter drops, rotations and fights.",
     objective: "Reach strong late-game positions with enough health, ammunition and utility to choose your fights instead of being forced into them.",
+
+    rolePriorities: [
+      { role: "Shot-caller", focus: "Choose rotations using zone position, terrain, vehicle access and available information.", avoid: "Changing direction repeatedly without communicating a clear plan." },
+      { role: "Scout", focus: "Gather information from safe cover and report enemy positions, compounds and rotation routes.", avoid: "Moving so far ahead that teammates cannot trade or rescue you." },
+      { role: "Entry fragger", focus: "Create pressure when the squad has utility and a follow-up angle.", avoid: "Taking a solo push before teammates are in position." },
+      { role: "Support", focus: "Carry smokes, cover revives and help teammates reset after fights.", avoid: "Spending all utility early or looting while a teammate needs immediate cover." }
+    ],
+    phases: [
+      { phase: "Drop and loot", priorities: ["Choose a landing spot that matches the flight path and squad risk tolerance.", "Call nearby teams and loot separate buildings without losing teammate distance.", "Secure a weapon, armor, healing and a vehicle before chasing upgrades."] },
+      { phase: "Rotation", priorities: ["Move early when the next zone requires a long or exposed crossing.", "Use ridges, hard cover and vehicles to reduce open-ground exposure.", "Avoid driving into a compound before scouting its occupancy."] },
+      { phase: "Final circles", priorities: ["Hold cover and playable terrain instead of chasing every knock.", "Save smokes for crossings, revives and blocking enemy sightlines.", "Fight only when the position, numbers or timing gives your squad an advantage."] }
+    ],
+    buildRules: ["Use a weapon pair that covers your preferred engagement ranges and that you can control reliably.", "Carry enough ammunition and healing without sacrificing all utility space.", "Prioritize smoke grenades for squad play; frag grenades can force enemies out of cover.", "Adjust scopes and attachments to the weapon and range you actually use rather than collecting every attachment."],
     plan: ["Choose a landing area based on the flight path, loot needs and how much early combat you want.", "Loot efficiently: prioritize a reliable weapon pair, ammunition, healing and grenades rather than searching one building too long.", "Move before the zone forces you. Use terrain and cover, and avoid crossing open ground without smoke or a route.", "When firing, identify your exit and nearby third-party threats. Reset after a knock if the position is exposed."],
     tips: ["Use sound cues and the minimap to estimate nearby threats.", "Keep smoke grenades for revives and dangerous crossings.", "Take fights when you have cover, information or a numbers advantage."],
     mistakes: ["Staying in the blue zone for unnecessary loot.", "Driving directly into a crowded compound without scouting.", "Looting a crate for too long after a fight."]
@@ -50,6 +63,19 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     name: "Valorant", genre: "FPS",
     intro: "Build consistent rounds through information, utility and coordinated space-taking.",
     objective: "Create a numbers or positioning advantage before committing to a site. A good round is built through information and utility, not aim alone.",
+
+    rolePriorities: [
+      { role: "Duelist", focus: "Create first contact with utility and take space with a teammate ready to trade.", avoid: "Entering alone without a flash, smoke or trade partner." },
+      { role: "Initiator", focus: "Gather information and use recon or flash utility to help the team clear contested areas.", avoid: "Using every ability before the team is ready to act." },
+      { role: "Controller", focus: "Place smokes to isolate angles and support the team's timing; communicate smoke duration.", avoid: "Blocking your own team's sightlines or smoking too early." },
+      { role: "Sentinel", focus: "Secure flanks and anchor space with traps or utility while staying ready to rotate.", avoid: "Over-rotating and leaving a free flank route." }
+    ],
+    phases: [
+      { phase: "Buy phase", priorities: ["Check team credits and coordinate a full buy, force or save.", "Agree on a site plan and who has entry, utility and spike duties.", "Use free time to choose a setup rather than standing in spawn."] },
+      { phase: "Mid-round", priorities: ["Use gathered information to decide whether to commit or rotate.", "Trade teammates and avoid giving isolated duels.", "Keep track of enemy ultimates and utility already spent."] },
+      { phase: "Post-plant / retake", priorities: ["Play crossfires and use utility to delay the defuse.", "Do not peek one by one when you can hold together.", "On retake, clear angles methodically and coordinate the defuse."] }
+    ],
+    buildRules: ["Buy weapons and shields according to team economy; avoid a lone expensive buy that breaks the next round.", "Prioritize utility that supports the planned execute or defense.", "Use the practice range and short deathmatch sessions to warm up aim, but review positioning and decision-making too.", "Learn common lineups and angles for your selected agents and maps before expanding your agent pool."],
     plan: ["Learn a small map pool deeply: common angles, rotations, timings and safe plant positions.", "On attack, use utility to clear dangerous angles and take space together. Avoid isolated dry peeks.", "On defense, vary your positions and preserve utility for the execute or retake.", "After gaining a numbers advantage, trade together and avoid giving the opponents isolated duels."],
     tips: ["Communicate enemy locations and utility used, not guesses.", "Keep crosshair at likely head height before you see an opponent.", "Review deaths to identify positioning and timing errors."],
     mistakes: ["Repeeking the same angle after being spotted.", "Using all utility before the enemy commits.", "Taking isolated fights when teammates can trade."]
@@ -58,6 +84,13 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     name: "Clash Royale", genre: "Strategy",
     intro: "Win more consistently by managing elixir, tracking cards and understanding your deck's win condition.",
     objective: "Create a favorable elixir trade, defend efficiently and convert the surviving troops into pressure with your win condition.",
+
+    phases: [
+      { phase: "Single elixir", priorities: ["Start with low-risk cycle plays when your opponent's deck is unknown.", "Identify their win condition and the best counter in your hand.", "Avoid committing your full elixir bar unless you know the defensive answer."] },
+      { phase: "Double elixir", priorities: ["Build pushes around surviving defensive troops.", "Track the opponent's counters and pressure when the key answer is out of cycle.", "Keep enough elixir to defend their main win condition."] },
+      { phase: "Overtime", priorities: ["Know whether spell cycle, tower pressure or a full push is your best route.", "Do not panic-spend when a small positive trade can protect your lead.", "Use spells only when the tower damage or troop value justifies the cost."] }
+    ],
+    buildRules: ["Build around one reliable win condition and include answers to air, ground and swarm threats.", "Check average elixir cost; a deck that is too heavy can struggle to defend fast cycle pressure.", "Include a spell package that fits your win condition and common matchups.", "Practice the deck long enough to learn its starting plays, defensive rotations and recovery plan after a bad hand."],
     plan: ["Identify your win condition and the opponent's strongest counter as soon as both are revealed.", "Avoid spending your full elixir bar on offense without knowing how you will defend the counterpush.", "Track key enemy cards after they are played. Pressure when their best answer is out of cycle.", "In double elixir, build pushes around a defended unit instead of stacking expensive cards at the bridge."],
     tips: ["Learn the elixir cost of the opponent's rotation.", "Use cheap cards to defend when they provide a positive trade.", "Adapt your spell value to the opponent's troop placement."],
     mistakes: ["Overcommitting after taking tower damage.", "Ignoring card cycle and repeatedly attacking into the same counter.", "Using spells on low-value targets."]
@@ -66,6 +99,13 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     name: "Minecraft", genre: "Survival",
     intro: "A safe progression route from your first night to a reliable long-term base.",
     objective: "Secure food, shelter and essential tools early, then build renewable resources before taking bigger exploration risks.",
+
+    phases: [
+      { phase: "First day", priorities: ["Collect wood, stone and food before nightfall.", "Craft a bed, basic tools, furnace and shield as soon as resources allow.", "Light and secure a compact shelter rather than building an elaborate base immediately."] },
+      { phase: "Early progression", priorities: ["Mine safely for iron and prepare armor, a bucket and spare tools.", "Create renewable food and organize storage near your base.", "Mark routes and carry blocks, torches and food before cave exploration."] },
+      { phase: "Long-term world", priorities: ["Build farms that solve recurring resource bottlenecks.", "Prepare potions, strong gear and a return route before dangerous dimensions or bosses.", "Back up important builds and store rare items before risky expeditions."] }
+    ],
+    buildRules: ["Keep a shield, food, torches and blocks on your hotbar for survival exploration.", "Use a water bucket and fall-damage plan when exploring cliffs, ravines or caves.", "Make storage and farms before collecting large amounts of rare materials.", "Carry only what you need on risky trips and leave irreplaceable items at base."],
     plan: ["Collect wood, stone and food immediately; make a bed and light your first shelter before night.", "Find iron and craft a shield, bucket and reliable armor before exploring dangerous caves.", "Create farms and organized storage so food and materials do not become constant bottlenecks.", "Prepare maps, blocks, food and spare equipment before long expeditions."],
     tips: ["Carry a water bucket when exploring high places or caves.", "Light up caves and your base perimeter to reduce hostile mob spawns.", "Store valuable items before attempting a risky exploration."],
     mistakes: ["Mining straight down or digging directly above yourself.", "Exploring without food, light or an escape route.", "Carrying every valuable item on a dangerous trip."]
@@ -74,6 +114,19 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
     name: "Genshin Impact", genre: "RPG",
     intro: "Build effective teams by combining roles, reactions, energy needs and investment priorities.",
     objective: "Build a team with a clear damage plan: a main damage source, reaction or buff support, enough energy generation and survivability.",
+
+    rolePriorities: [
+      { role: "On-field damage dealer", focus: "Stay on field for the part of the rotation where your kit deals the most damage.", avoid: "Extending field time after buffs or off-field effects have expired." },
+      { role: "Off-field damage", focus: "Apply elements and deal damage while allowing the main damage dealer to act.", avoid: "Using skills at timings that disrupt the team's reaction sequence." },
+      { role: "Buffer / reaction support", focus: "Apply the right buffs or elemental aura before the main damage window.", avoid: "Building personal damage at the expense of the team's core reaction or buff uptime." },
+      { role: "Sustain", focus: "Provide healing, shielding or interruption resistance without breaking the rotation.", avoid: "Over-investing in healing when the team needs more energy or damage support." }
+    ],
+    phases: [
+      { phase: "Team planning", priorities: ["Choose a main damage plan and reactions the team can apply consistently.", "Check elemental application, enemy resistance and whether the team needs healing or shielding.", "Confirm that each character has a useful role rather than overlapping without purpose."] },
+      { phase: "Build investment", priorities: ["Level key talents and weapons before chasing perfect artifact substats.", "Use correct artifact main stats and enough Energy Recharge for reliable bursts.", "Invest in supports that improve the whole team's damage or survivability."] },
+      { phase: "Combat rotation", priorities: ["Start with setup skills and buffs before the main damage window.", "Keep elemental application and energy generation consistent.", "Adapt to enemy phases and avoid wasting long cooldowns during invulnerability."] }
+    ],
+    buildRules: ["Prioritize weapon level and the talents that contribute most to each character's role.", "Choose artifact main stats that fit the character; substat optimization comes later.", "Meet practical Energy Recharge needs so the intended rotation is repeatable.", "Do not copy a build without checking the character's team, reaction and field-time role."],
     plan: ["Choose a team around a reaction or damage synergy instead of selecting four characters independently.", "Level the most important talents and weapons for your main damage dealer before spreading resources thinly.", "Use artifacts with useful main stats first; optimize substats after the core build works.", "Check energy recharge needs and adjust rotations so key bursts are ready when needed."],
     tips: ["Test rotations against real enemies, not only character-screen stats.", "Prioritize a coherent team over several unrelated high-rarity characters.", "Use defensive support when it prevents interrupted damage rotations."],
     mistakes: ["Farming perfect artifacts before upgrading core talents and weapons.", "Ignoring energy recharge and losing burst uptime.", "Building teams without considering elemental application and enemy resistance."]
