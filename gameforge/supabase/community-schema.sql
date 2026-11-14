@@ -89,7 +89,8 @@ $$;
 revoke all on function public.join_channel_by_invite(text) from public, anon;
 grant execute on function public.join_channel_by_invite(text) to authenticated;
 
--- Explicit Data API grants are required for public-schema tables on current projects.
+-- Explicit, least-privilege Data API grants are required for public-schema tables.
+revoke all privileges on table public.channels, public.channel_members, public.messages from public, anon, authenticated;
 grant usage on schema public to authenticated;
 grant select, insert, update on public.channels to authenticated;
 grant select, insert on public.channel_members to authenticated;
