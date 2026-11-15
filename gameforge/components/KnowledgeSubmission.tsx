@@ -26,8 +26,10 @@ export default function KnowledgeSubmission(){
   setBusy(true);
   const {data:{user},error:userError}=await client.auth.getUser();
   if(userError||!user){setBusy(false);setMessage("Sign in to submit a record for review.");return;}
+  const gameResult=await client.from("game_catalog").select("id").eq("slug",game).single();
+  if(gameResult.error||!gameResult.data){setBusy(false);setMessage("Could not find that game in the catalog.");return;}
   const {error}=await client.from("game_entity_submissions").insert({
-   game_id:(await client.from("game_catalog").select("id").eq("slug",game).single()).data?.id,
+   game_id:gameResult.data.id,
    submitted_by:user.id,entity_type:entityType,name:name.trim(),
    claimed_game_version:version.trim()||null,source_url:source.trim()||null,
    content:{role:role.trim(),abilities:parse(abilities),equipment:parse(equipment),counters:parse(counters),notes:notes.trim()}
