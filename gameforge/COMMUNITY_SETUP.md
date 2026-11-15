@@ -8,7 +8,7 @@ The community feature uses Supabase for player accounts, channel data and real-t
 2. Copy the Project URL and the **publishable** key (or legacy anon/public key). Never use the service-role or secret key in the browser.
 3. Open **SQL Editor → New query** and run `gameforge/supabase/community-schema.sql` if it has not already been applied.
 
-The SQL creates channels, private-channel membership, messages, row-level security policies, the invite-code join function, and owner-only invite-code retrieval. If you already ran an earlier version of `community-schema.sql`, run `gameforge/supabase/community-invite-security.sql` in the SQL Editor to revoke direct invite-code reads and install the owner-only RPC.
+The SQL creates channels, private-channel membership, messages, row-level security policies, the invite-code join function, and owner-only invite-code retrieval. To enable player profiles, also run `gameforge/supabase/player-profiles.sql` in the SQL Editor. It creates a `profiles` table with public-to-signed-in-player profile reads and owner-only profile edits. If you already ran an earlier version of `community-schema.sql`, run `gameforge/supabase/community-invite-security.sql` in the SQL Editor to revoke direct invite-code reads and install the owner-only RPC.
 
 ## 2. Add environment variables to Vercel Preview
 
@@ -29,7 +29,7 @@ After saving the variables and when the Vercel build quota is available, trigger
 2. Confirm the email if Supabase email confirmation is enabled.
 3. Create a public channel and send a message.
 4. Create a private channel, copy its invite code, and join it from another account.
-5. Confirm that private channels and messages are not visible to unauthorized users.
+5. Confirm that private channels and messages are not visible to unauthorized users.\n6. Open `/profile`, choose a unique username, display name, optional HTTPS avatar image URL and short bio, then save. Refresh the page to confirm the profile persists.
 
 ## Notes
 
