@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, Target, Lightbulb, ShieldAlert } from "lucide-
 import { notFound } from "next/navigation";
 import { strategyExpansions } from "@/lib/strategy-expansion";
 import StrategyLibrary from "@/components/StrategyLibrary";
+import MobileLegendsExplorer from "@/components/MobileLegendsExplorer";
 
 const gameGuides: Record<string, { name: string; genre: string; intro: string; objective: string; plan: string[]; tips: string[]; mistakes: string[]; rolePriorities?: { role: string; focus: string; avoid: string }[]; buildRules?: string[]; lanePlans?: { role: string; early: string; mid: string; late: string; emblem: string; spell: string; build: string; }[]; matchups?: { lane: string; pick: string; why: string; warning: string; }[]; phases?: { phase: string; priorities: string[] }[]; builds?: { name: string; activity: string; difficulty: string; gear: string[]; skills: string[]; play: string[]; warning: string }[]; customStrategies?: { name: string; scenario: string; setup: string; execution: string[]; winCondition: string; adaptation: string }[] }> = {
   "mobile-legends": {
@@ -246,6 +247,7 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
         </div>
       </section>
       {(guide.builds || guide.customStrategies) && <section className="section !py-6"><div className="container"><StrategyLibrary game={slug} builds={guide.builds || []} strategies={guide.customStrategies || []}/></div></section>}
+      {slug === "mobile-legends" && <section className="section !py-2"><div className="container"><MobileLegendsExplorer builds={guide.builds || []}/></div></section>}
       <section className="section !pt-4">
         <div className="container grid gap-6 lg:grid-cols-[1.5fr_1fr]">
           <article className="game-card p-6 sm:p-8">
