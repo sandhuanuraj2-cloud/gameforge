@@ -76,7 +76,7 @@ export default function CommunityChannelsPage() {
       });
     const sub = supabase.channel("chat-" + active.id)
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: "channel_id=eq." + active.id },
-        (payload) => setMessages((old) => [...old.filter((item) => item.id !== (payload.new as Message).id, payload.new as Message].slice(-100)))
+        (payload) => setMessages((old) => [...old.filter((item) => item.id !== (payload.new as Message).id), payload.new as Message].slice(-100))
       .subscribe();
     return () => { alive = false; void supabase.removeChannel(sub); };
   }, [supabase, session, active, joinedIds]);
