@@ -58,6 +58,7 @@ export default function Home() {
             <a className="nav-link" href="#games">Games</a>
             <a className="nav-link" href="#categories">Categories</a>
             <a className="nav-link" href="#guides">Guides</a>
+            <a className="nav-link" href="/knowledge">Knowledge Library</a>
             <a className="nav-link" href="/community">Community</a>
           </nav>
           <a href="/community" className="primary-btn hidden sm:inline-flex">Join the community</a>
@@ -69,6 +70,7 @@ export default function Home() {
           <a className="nav-link" href="#games" onClick={() => setMobileMenu(false)}>Games</a>
           <a className="nav-link" href="#categories" onClick={() => setMobileMenu(false)}>Categories</a>
           <a className="nav-link" href="#guides" onClick={() => setMobileMenu(false)}>Guides</a>
+          <a className="nav-link" href="/knowledge" onClick={() => setMobileMenu(false)}>Knowledge Library</a>
           <a className="nav-link" href="/community" onClick={() => setMobileMenu(false)}>Community</a>
         </nav>}
       </header>
