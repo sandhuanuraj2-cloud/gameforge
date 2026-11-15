@@ -1,2 +1,2 @@
-import CommunityPage from "@/components/CommunityPage";
-export default function Page(){ return <CommunityPage/>; }
+import CommunityChannelsPage from "@/components/CommunityChannelsPage";
+export default function Page(){ return <CommunityChannelsPage/>; }
