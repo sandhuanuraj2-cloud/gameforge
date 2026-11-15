@@ -29,8 +29,12 @@ export default function KnowledgeAdmin(){
   ]);
   if(entityResult.error||guideResult.error){setError(entityResult.error?.message??guideResult.error?.message??"Could not load submissions.");setChecking(false);return;}
   const mapGame=(v:{name:string}|{name:string}[]|null)=>Array.isArray(v)?v[0]?.name??"Unknown game":v?.name??"Unknown game";
-  setEntities((entityResult.data??[]).map((row:any)=>({id:row.id,name:row.name,kind:row.entity_type,gameName:mapGame(row.game_catalog),createdAt:row.created_at,content:row.content??{},version:row.claimed_game_version,source:row.source_url})));
-  setGuides((guideResult.data??[]).map((row:any)=>({id:row.id,title:row.title,kind:row.kind,gameName:mapGame(row.game_catalog),createdAt:row.created_at,content:row.content??{},version:row.claimed_game_version,source:row.source_url})));
+  type EntityRow={id:string;name:string;entity_type:string;content:Record<string,unknown>|null;claimed_game_version:string|null;source_url:string|null;created_at:string;game_catalog:{name:string}|{name:string}[]|null};
+  type GuideRow={id:string;title:string;kind:string;content:Record<string,unknown>|null;claimed_game_version:string|null;source_url:string|null;created_at:string;game_catalog:{name:string}|{name:string}[]|null};
+  const entityRows=(entityResult.data??[]) as unknown as EntityRow[];
+  const guideRows=(guideResult.data??[]) as unknown as GuideRow[];
+  setEntities(entityRows.map((row)=>({id:row.id,name:row.name,kind:row.entity_type,gameName:mapGame(row.game_catalog),createdAt:row.created_at,content:row.content??{},version:row.claimed_game_version,source:row.source_url})));
+  setGuides(guideRows.map((row)=>({id:row.id,title:row.title,kind:row.kind,gameName:mapGame(row.game_catalog),createdAt:row.created_at,content:row.content??{},version:row.claimed_game_version,source:row.source_url})));
   setError("");setChecking(false);
  },[]);
  useEffect(()=>{void load()},[load]);
