@@ -5,12 +5,14 @@ import Link from "next/link";
 import {Hash,Lock,Plus,Send,LogOut,Users,Copy,MessageSquare,UserRound} from "lucide-react";
 import {getSupabase} from "@/lib/supabase";
 type Channel={id:string;name:string;is_private:boolean;created_by:string};
-type Message={id:string;channel_id:string;user_id:string;content:string;created_at:string};\ntype PlayerBadge={id:string;username:string;display_name:string;avatar_url:string|null};
+type Message={id:string;channel_id:string;user_id:string;content:string;created_at:string};
+type PlayerBadge={id:string;username:string;display_name:string;avatar_url:string|null};
 export default function CommunityPage(){
  const supabase=useMemo(()=>getSupabase(),[]);
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[displayName,setDisplayName]=useState("");
  const [authMode,setAuthMode]=useState<"signin"|"signup">("signup"),[channels,setChannels]=useState<Channel[]>([]),[active,setActive]=useState<Channel|null>(null),[messages,setMessages]=useState<Message[]>([]);
  const [message,setMessage]=useState(""),[channelName,setChannelName]=useState(""),[privateChannel,setPrivateChannel]=useState(false),[inviteCode,setInviteCode]=useState(""),[busy,setBusy]=useState(false),[sending,setSending]=useState(false),[notice,setNotice]=useState("");
+ const [profilesById,setProfilesById]=useState<Record<string,PlayerBadge>>({});
  const sessionUserIdRef=useRef<string|undefined>(session?.user.id);
  sessionUserIdRef.current=session?.user.id;
  const configured=Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
