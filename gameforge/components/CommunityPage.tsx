@@ -2,7 +2,7 @@
 import {FormEvent,useCallback,useEffect,useMemo,useRef,useState} from "react";
 import type { Session } from "@supabase/supabase-js";
 import Link from "next/link";
-import {Hash,Lock,Plus,Send,LogOut,Users,Copy,MessageSquare} from "lucide-react";
+import {Hash,Lock,Plus,Send,LogOut,Users,Copy,MessageSquare,UserRound} from "lucide-react";
 import {getSupabase} from "@/lib/supabase";
 type Channel={id:string;name:string;is_private:boolean;created_by:string};
 type Message={id:string;channel_id:string;user_id:string;content:string;created_at:string};
@@ -42,7 +42,7 @@ export default function CommunityPage(){
  if(!session)return <main className="min-h-screen px-4 py-10"><div className="community mx-auto max-w-md"><Link href="/" className="text-link">← GAMEFORGE</Link><div className="section-kicker mt-8">GAMEFORGE Community</div><h1 className="mt-2 text-3xl font-black">{authMode==="signup"?"Create your player account":"Welcome back"}</h1><p className="mt-2 text-sm text-slate-400">Sign in to create channels and chat.</p>
   <form onSubmit={authenticate} className="mt-6 grid gap-3">{authMode==="signup"&&<input className="community-input" placeholder="Display name" value={displayName} onChange={e=>setDisplayName(e.target.value)}/>}<input className="community-input" type="email" required placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)}/><input className="community-input" type="password" minLength={6} required placeholder="Password (at least 6 characters)" value={password} onChange={e=>setPassword(e.target.value)}/><button className="primary-btn w-full" disabled={busy}>{busy?"Please wait…":authMode==="signup"?"Create account":"Sign in"}</button></form>
   <button className="mt-4 text-sm text-purple-300" onClick={()=>setAuthMode(authMode==="signup"?"signin":"signup")}>{authMode==="signup"?"Already registered? Sign in":"New to GAMEFORGE? Create an account"}</button>{notice&&<p className="mt-4 text-sm text-amber-300">{notice}</p>}</div></main>;
- return <main className="min-h-screen"><header className="topbar"><div className="container flex h-[68px] items-center justify-between"><Link href="/" className="brand">GAME<span>FORGE</span></Link><div className="flex items-center gap-3 text-sm"><span className="hidden text-slate-400 sm:inline">{session.user.email}</span><button onClick={signOut} className="secondary-btn"><LogOut size={15}/> Sign out</button></div></div></header>
+ return <main className="min-h-screen"><header className="topbar"><div className="container flex h-[68px] items-center justify-between"><Link href="/" className="brand">GAME<span>FORGE</span></Link><div className="flex items-center gap-3 text-sm"><Link href="/profile" className="secondary-btn"><UserRound size={15}/> Player profile</Link><span className="hidden text-slate-400 sm:inline">{session.user.email}</span><button onClick={signOut} className="secondary-btn"><LogOut size={15}/> Sign out</button></div></div></header>
  <div className="container py-8"><div className="mb-6"><div className="section-kicker">Play together</div><h1 className="text-3xl font-black">Community channels</h1><p className="mt-2 text-sm text-slate-400">Create public spaces or invite-only rooms and chat with your squad in real time.</p></div>
  {notice&&<div className="mb-4 rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 text-sm text-amber-200">{notice}</div>}
  <div className="grid gap-5 lg:grid-cols-[280px_1fr]"><aside className="space-y-4">
