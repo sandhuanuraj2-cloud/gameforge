@@ -95,7 +95,23 @@ grant execute on function public.join_channel_by_invite(text) to authenticated;
 -- Explicit, least-privilege Data API grants are required for public-schema tables.
 revoke all privileges on table public.channels, public.channel_members, public.messages from public, anon, authenticated;
 grant usage on schema public to authenticated;
-grant select, insert, update on public.channels to authenticated;
+grant select (id, name, is_private, created_by, created_at) on public.channels to authenticated;
+grant insert (name, is_private, created_by) on public.channels to authenticated;
+grant update (name, is_private) on public.channels to authenticated;
+
+create or replace function public.get_channel_invite_code(channel_uuid uuid)
+returns text language plpgsql security definer set search_path='' as $
+declare invite text;
+begin
+ if auth.uid() is null then raise exception 'Sign in required'; end if;
+ select invite_code into invite from public.channels
+ where id=channel_uuid and created_by=(select auth.uid()) and is_private=true;
+ if invite is null then raise exception 'Only the private-channel owner can retrieve its invite code'; end if;
+ return invite;
+end;
+$;
+revoke all on function public.get_channel_invite_code(uuid) from public, anon;
+grant execute on function public.get_channel_invite_code(uuid) to authenticated;
 grant select, insert on public.channel_members to authenticated;
 grant select, insert on public.messages to authenticated;
 
