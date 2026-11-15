@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, BookOpen, Coins, Swords, History, Filter } from "lucide-react";
+import { Search } from "lucide-react";
 import { knowledgeGames, knowledgeGuides, type KnowledgeKind, type KnowledgeStatus } from "@/lib/game-knowledge";
 const labels:Record<KnowledgeKind,string>={"hero-build":"Builds","strategy":"Strategies","counter":"Counters","economy":"Money making","progression":"Progression","crafting":"Crafting","market":"Market","team-composition":"Team composition"};
 export default function KnowledgeLibrary(){
