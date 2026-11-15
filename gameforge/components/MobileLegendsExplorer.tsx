@@ -44,6 +44,24 @@ const heroes = [
     summary: "Trade around cooldowns, build for the enemy damage profile and choose engage or peel.",
     tags: ["fighter", "exp", "frontline", "sustain"],
   },
+  {
+    name: "Aamon",
+    role: "Jungle · Assassin",
+    alias: "Magic burst and cleanup",
+    image: "",
+    alt: "Aamon hero artwork not yet attached",
+    summary: "Farm efficiently, use camouflage to flank, and enter fights after allies create pressure.",
+    tags: ["assassin", "jungle", "magic", "burst", "retribution"],
+  },
+  {
+    name: "Miya",
+    role: "Gold lane · Marksman",
+    alias: "Attack-speed critical damage",
+    image: "",
+    alt: "Miya hero artwork not yet attached",
+    summary: "Prioritize safe farm, build attack speed and critical damage, and stay protected in team fights.",
+    tags: ["marksman", "gold", "attack speed", "critical", "inspire"],
+  },
 ];
 
 const equipmentIcons: Record<string, string> = {
@@ -97,7 +115,7 @@ export default function MobileLegendsExplorer({ builds }: Props) {
           {filteredHeroes.map((hero) => (
             <article key={hero.name} className="overflow-hidden rounded-2xl border border-purple-900/50 bg-black/25">
               <div className="relative h-44 overflow-hidden bg-gradient-to-br from-purple-950 to-blue-950">
-                {!brokenImages.includes(hero.name) ? <Image src={hero.image} alt={hero.alt} fill unoptimized sizes="(max-width: 640px) 100vw, 33vw" className="object-cover object-top" onError={() => setBrokenImages((current) => [...current, hero.name])} /> : <div className="grid h-full place-items-center text-5xl">⚔️</div>}
+                {hero.image && !brokenImages.includes(hero.name) ? <Image src={hero.image} alt={hero.alt} fill unoptimized sizes="(max-width: 640px) 100vw, 33vw" className="object-cover object-top" onError={() => setBrokenImages((current) => [...current, hero.name])} /> : <div className="grid h-full place-items-center text-5xl">⚔️</div>}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                   <h3 className="text-xl font-black text-white">{hero.name}</h3>
                   <p className="text-xs font-semibold text-blue-200">{hero.role}</p>
