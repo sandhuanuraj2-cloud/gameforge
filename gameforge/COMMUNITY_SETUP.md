@@ -8,7 +8,7 @@ The community feature uses Supabase for player accounts, channel data and real-t
 2. Copy the Project URL and the **publishable** key (or legacy anon/public key). Never use the service-role or secret key in the browser.
 3. Open **SQL Editor → New query** and run `gameforge/supabase/community-schema.sql` if it has not already been applied.
 
-The SQL creates channels, private-channel membership, messages, row-level security policies and the invite-code join function.
+The SQL creates channels, private-channel membership, messages, row-level security policies, the invite-code join function, and owner-only invite-code retrieval. If you already ran an earlier version of `community-schema.sql`, run `gameforge/supabase/community-invite-security.sql` in the SQL Editor to revoke direct invite-code reads and install the owner-only RPC.
 
 ## 2. Add environment variables to Vercel Preview
 
