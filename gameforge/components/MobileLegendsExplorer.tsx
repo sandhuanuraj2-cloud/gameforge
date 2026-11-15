@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { Search, Shield, Sword, Sparkles, X } from "lucide-react";
+import { Search, Sparkles, X } from "lucide-react";
 
 type Build = {
   name: string;
