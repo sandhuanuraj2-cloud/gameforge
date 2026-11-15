@@ -149,9 +149,22 @@ export default function Home() {
               <a href="/community" className="primary-btn mt-5 inline-flex">Open community</a>
             </div>
             <div className="flex flex-wrap gap-3">
-              <div className="rounded-xl border border-purple-900/70 bg-black/20 p-4"><Users className="mb-2 text-purple-300"/><div className="font-bold">Player channels</div><div className="text-xs text-slate-500">Create your own room</div></div>
-              <div className="rounded-xl border border-blue-900/70 bg-black/20 p-4"><ShieldCheck className="mb-2 text-blue-300"/><div className="font-bold">Invite-only rooms</div><div className="text-xs text-slate-500">Share a private invite</div></div>
-              <div className="rounded-xl border border-purple-900/70 bg-black/20 p-4"><BookOpen className="mb-2 text-purple-300"/><div className="font-bold">Text chat</div><div className="text-xs text-slate-500">Discuss strategies live</div></div>
+              <Link href="/community" aria-label="Find and join player channels" className="block min-w-[190px] rounded-xl border border-purple-900/70 bg-black/20 p-4 transition hover:border-purple-400 hover:bg-purple-500/10 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <Users className="mb-2 text-purple-300"/>
+                <div className="font-bold">Player channels</div>
+                <div className="text-xs text-slate-400">Find and join public rooms</div>
+                <div className="mt-3 text-xs font-bold text-purple-300">Browse channels →</div>
+              </Link>
+              <Link href="/community" aria-label="Open invite-only rooms" className="block min-w-[190px] rounded-xl border border-blue-900/70 bg-black/20 p-4 transition hover:border-blue-400 hover:bg-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <ShieldCheck className="mb-2 text-blue-300"/>
+                <div className="font-bold">Invite-only rooms</div>
+                <div className="text-xs text-slate-400">Join with a private invite</div>
+              </Link>
+              <Link href="/community" aria-label="Open community text chat" className="block min-w-[190px] rounded-xl border border-purple-900/70 bg-black/20 p-4 transition hover:border-purple-400 hover:bg-purple-500/10 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <BookOpen className="mb-2 text-purple-300"/>
+                <div className="font-bold">Text chat</div>
+                <div className="text-xs text-slate-400">Discuss strategies with players</div>
+              </Link>
             </div>
           </div>
         </div>
