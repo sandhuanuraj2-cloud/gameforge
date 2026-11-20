@@ -78,14 +78,17 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
     <p className="mt-4 text-xs text-slate-500">{items.length} result{items.length === 1 ? "" : "s"}</p>
     {items.length === 0 ? <div className="mt-3 rounded-xl border border-white/10 p-6 text-center text-sm text-slate-400">No matching build or strategy. Try another hero, item or keyword.</div> :
       <div className="mt-3 grid gap-4">
-        {items.map((item) => <article key={item.type + item.name} className="overflow-hidden rounded-2xl border border-purple-900/50 bg-black/25">
+        {items.map((item) => {
+          const itemArtwork = item.type === "build" ? buildArtwork[item.name] : undefined;
+          const artwork = itemArtwork ?? (item.type === "strategy" ? visual.artwork : undefined);
+          return <article key={item.type + item.name} className="overflow-hidden rounded-2xl border border-purple-900/50 bg-black/25">
           <div className={`relative flex min-h-32 items-center gap-4 overflow-hidden bg-gradient-to-br ${visual.accent} p-4 sm:min-h-36 sm:px-6`}>
-            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28"><ArtworkImage artwork={(item.type === "build" ? buildArtwork[item.name] : undefined) || visual.artwork} fallback={visual.emoji}/></div>
+            <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black/25 shadow-xl sm:h-28 sm:w-28"><ArtworkImage artwork={artwork} fallback={visual.emoji}/></div>
             <div className="relative z-10 min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-200/80">{visual.label} · {item.type === "build" ? "Build" : "Custom tactic"}</p>
               <h3 className="mt-2 text-lg font-extrabold text-white sm:text-xl">{item.name}</h3>
               <p className="mt-1 text-xs text-slate-300">{item.type === "build" ? item.activity : item.scenario}</p>
-              <a href={(item.type === "build" ? buildArtwork[item.name] : undefined)?.source || visual.artwork.source} target="_blank" rel="noreferrer" className="mt-2 inline-block text-[10px] text-blue-200/70 underline underline-offset-2">Image source</a>
+              {artwork?.source ? <a href={artwork.source} target="_blank" rel="noreferrer" className="mt-2 inline-block text-[10px] text-blue-200/70 underline underline-offset-2">Image source</a> : <span className="mt-2 inline-block text-[10px] text-slate-400">Artwork not added yet</span>}
             </div>
             <div className="pointer-events-none absolute -right-5 -top-8 h-36 w-36 rounded-full border border-white/10"/>
             <div className="pointer-events-none absolute -bottom-14 right-16 h-36 w-36 rounded-full border border-white/10"/>
@@ -106,7 +109,8 @@ export default function StrategyLibrary({ game, builds, strategies }: Props) {
               <p className="mt-2 text-xs leading-5 text-slate-400"><strong className="text-slate-300">If it fails:</strong> {item.adaptation}</p>
             </>}
           </div>
-        </article>)}
+        </article>;
+        })}
       </div>}
   </section>;
 }
