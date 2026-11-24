@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GAMEFORGE — Learn. Strategize. Dominate.",
+  title: "Gaming Strategy Library | PC, Mobile & Console",
   description:
     "Discover gaming strategies, builds, counters and community guides for PC, mobile and console games.",
 };
