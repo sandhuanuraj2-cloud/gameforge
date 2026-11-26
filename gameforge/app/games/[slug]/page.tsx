@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Target, Lightbulb, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
 import { strategyExpansions } from "@/lib/strategy-expansion";
 import StrategyLibrary from "@/components/StrategyLibrary";
 import MobileLegendsExplorer from "@/components/MobileLegendsExplorer";
@@ -228,14 +229,102 @@ const gameGuides: Record<string, { name: string; genre: string; intro: string; o
 export default async function GameGuidePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const baseGuide = gameGuides[slug];
-  if (!baseGuide) notFound();
+
+  if (!baseGuide) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) notFound();
+
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+
+    const { data: game, error: gameError } = await supabase
+      .from("game_catalog")
+      .select("id, slug, name, platforms")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (gameError || !game) notFound();
+
+    const { data: genreRows } = await supabase
+      .from("game_genres")
+      .select("is_primary, genre_catalog(name, slug)")
+      .eq("game_id", game.id)
+      .order("is_primary", { ascending: false });
+
+    const genreNames = (genreRows ?? [])
+      .map((row) => {
+        const linkedGenre = Array.isArray(row.genre_catalog)
+          ? row.genre_catalog[0]
+          : row.genre_catalog;
+        return linkedGenre?.name;
+      })
+      .filter((name): name is string => Boolean(name));
+
+    const platforms = (game.platforms ?? []) as string[];
+
+    return (
+      <main className="site-shell min-h-screen">
+        <header className="topbar">
+          <div className="container flex h-[72px] items-center justify-between">
+            <Link href="/" className="brand">STRATEGY<span> LIBRARY</span></Link>
+            <Link href="/#games" className="text-link"><ArrowLeft size={15} className="inline" /> All games</Link>
+          </div>
+        </header>
+        <section className="hero !py-16">
+          <div className="container relative z-10">
+            <span className="eyebrow"><Target size={14} /> Game profile</span>
+            <h1 className="hero-title !text-4xl sm:!text-6xl">{game.name}</h1>
+            <p className="hero-copy">
+              Explore this game's platforms and genres. Strategy content will appear here as it is added and reviewed.
+            </p>
+          </div>
+        </section>
+        <section className="section !pt-4">
+          <div className="container grid gap-5 md:grid-cols-2">
+            <article className="game-card p-6">
+              <h2 className="text-lg font-extrabold">Genres</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-300">
+                {genreNames.length ? genreNames.join(" · ") : "No genres assigned yet"}
+              </p>
+            </article>
+            <article className="game-card p-6">
+              <h2 className="text-lg font-extrabold">Platforms</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-300">
+                {platforms.length ? platforms.join(" · ") : "Platforms not listed yet"}
+              </p>
+            </article>
+          </div>
+          <div className="container mt-5">
+            <div className="empty-state">
+              <h2 className="text-lg font-extrabold text-white">No published guides yet</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">
+                Builds, counters and strategy guides for this game have not been published yet. Check back as the library grows.
+              </p>
+              <Link href="/#games" className="primary-btn mt-5 inline-flex">Browse other games</Link>
+            </div>
+          </div>
+        </section>
+        <footer className="footer">
+          <div className="container flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+            <Link href="/" className="brand text-base">STRATEGY<span> LIBRARY</span></Link>
+            <p>Gaming strategies for PC, mobile and console.</p>
+            <Link href="/#games" className="text-link">Explore more games <ArrowLeft className="inline rotate-180" size={14}/></Link>
+          </div>
+        </footer>
+      </main>
+    );
+  }
+
   const guide = { ...baseGuide, ...strategyExpansions[slug] };
 
   return (
     <main className="site-shell min-h-screen">
       <header className="topbar">
         <div className="container flex h-[72px] items-center justify-between">
-          <Link href="/" className="brand">GAME<span>FORGE</span></Link>
+          <Link href="/" className="brand">STRATEGY<span> LIBRARY</span></Link>
           <Link href="/#games" className="text-link"><ArrowLeft size={15} className="inline" /> All games</Link>
         </div>
       </header>
@@ -326,7 +415,7 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
           </aside>
         </div>
       </section>
-      <footer className="footer"><div className="container flex flex-col justify-between gap-3 sm:flex-row sm:items-center"><Link href="/" className="brand text-base">GAME<span>FORGE</span></Link><p>© 2026 GAMEFORGE. Learn. Strategize. Dominate.</p><Link href="/#games" className="text-link">Explore more games <ArrowLeft className="inline rotate-180" size={14}/></Link></div></footer>
+      <footer className="footer"><div className="container flex flex-col justify-between gap-3 sm:flex-row sm:items-center"><Link href="/" className="brand text-base">STRATEGY<span> LIBRARY</span></Link><p>Gaming strategies for PC, mobile and console.</p><Link href="/#games" className="text-link">Explore more games <ArrowLeft className="inline rotate-180" size={14}/></Link></div></footer>
     </main>
   );
 }
