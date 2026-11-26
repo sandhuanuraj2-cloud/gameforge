@@ -278,7 +278,7 @@ export default async function GameGuidePage({ params }: { params: Promise<{ slug
             <span className="eyebrow"><Target size={14} /> Game profile</span>
             <h1 className="hero-title !text-4xl sm:!text-6xl">{game.name}</h1>
             <p className="hero-copy">
-              Explore this game's platforms and genres. Strategy content will appear here as it is added and reviewed.
+              Explore the available platforms and genres for this game. Strategy content will appear here as it is added and reviewed.
             </p>
           </div>
         </section>
