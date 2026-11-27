@@ -24,7 +24,7 @@ export async function GET() {
   const [gamesResult, genresResult] = await Promise.all([
     supabase
       .from("game_catalog")
-      .select("id, slug, name, platforms, genre")
+      .select("id, slug, name, platforms")
       .order("name", { ascending: true }),
     supabase
       .from("game_genres")
@@ -90,7 +90,6 @@ export async function GET() {
       name: game.name,
       platforms,
       platformGroups: Array.from(platformGroups),
-      legacyGenre: game.genre,
       genres: genresByGame.get(game.id) ?? [],
     };
   });
