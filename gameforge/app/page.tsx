@@ -28,7 +28,6 @@ type Game = {
   name: string;
   platforms: string[];
   platformGroups: string[];
-  legacyGenre: string;
   genres: GameGenre[];
 };
 
